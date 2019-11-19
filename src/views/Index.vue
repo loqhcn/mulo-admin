@@ -1,34 +1,36 @@
 <template>
   <div class="container-admin">
     <!-- 左侧菜单 -->
-    <div class="navmenu-admin">
+    <div class="menu-admin">
       <div class="logo">MuloUi Admin</div>
-      <div class="navmenu column drak full">
-        <div class="navmenu-item">
+
+      <o-menu>
+        <o-menu-item></o-menu-item>      
+      </o-menu>
+
+      <div class="menu column drak full">
+        <div class="menu-item">
           <a>导航栏1</a>
-          <div class="navmenu-item">
+          <div class="menu-item">
             <a>导航栏1-1</a>
-            <div class="navmenu-item">
-              <a>导航栏1-1-1</a>
-              <div class="navmenu-item">
-                <a>导航栏1-1-1-1</a>
-              </div>
-              <div class="navmenu-item">
-                <a>导航栏1-1-1-2</a>
-              </div>
-              <div class="navmenu-item">
-                <a>导航栏1-1-1-3</a>
-                <div class="navmenu-item">
-                  <a>导航栏1-1-1-3-1导航栏</a>
-                </div>
-              </div>
-            </div>
+          </div>
+          <div class="menu-item">
+            <a>导航栏1-1-1</a>
+          </div>
+          <div class="menu-item">
+            <a>导航栏1-1-1-1</a>
+          </div>
+          <div class="menu-item">
+            <a>导航栏1-1-1-2</a>
+          </div>
+          <div class="menu-item">
+            <a>导航栏1-1-1-3</a>
           </div>
         </div>
-        <div class="navmenu-item">
+        <div class="menu-item">
           <a>导航栏</a>
         </div>
-        <div class="navmenu-item">
+        <div class="menu-item">
           <a>导航栏</a>
         </div>
       </div>
@@ -59,10 +61,10 @@ export default {};
 
 <style lang="scss" scoped>
 $menu_width: 11rem;
-.navmenu-admin {
+.menu-admin {
   position: relative;
 }
-.navmenu-admin {
+.menu-admin {
   position: fixed;
   left: 0;
   right: 0;

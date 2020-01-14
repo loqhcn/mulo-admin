@@ -1,12 +1,13 @@
 <template>
-    <div class="">
-        仪表盘哦哦哦
+    <div>
+        用户列表
     </div>
 </template>
 
 <script>
     export default {
         
+
     }
 </script>
 

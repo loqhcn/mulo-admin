@@ -4,35 +4,38 @@
     <div class="menu-admin">
       <div class="logo">MuloUi Admin</div>
 
-      <o-menu>
-        <o-menu-item></o-menu-item>      
-      </o-menu>
-
-      <div class="menu column drak full">
-        <div class="menu-item">
-          <a>导航栏1</a>
-          <div class="menu-item">
-            <a>导航栏1-1</a>
-          </div>
-          <div class="menu-item">
-            <a>导航栏1-1-1</a>
-          </div>
-          <div class="menu-item">
-            <a>导航栏1-1-1-1</a>
-          </div>
-          <div class="menu-item">
-            <a>导航栏1-1-1-2</a>
-          </div>
-          <div class="menu-item">
-            <a>导航栏1-1-1-3</a>
-          </div>
-        </div>
-        <div class="menu-item">
-          <a>导航栏</a>
-        </div>
-        <div class="menu-item">
-          <a>导航栏</a>
-        </div>
+      <div class="leftmenu full-h">
+        <o-menu
+          :default-active="activeIndex2"
+          class="o-menu-demo"
+          @select="handleSelect"
+          background-color="#545c64"
+          text-color="#fff"
+          active-text-color="#ffd04b"
+        >
+          <o-menu-item index="1">处理中心</o-menu-item>
+          <o-submenu index="2">
+            <template slot="title">我的工作台</template>
+            <o-menu-item index="2-1"><router-link to="/index/table">dashboard1</router-link></o-menu-item>
+            <o-menu-item index="2-2">选项2</o-menu-item>
+            <o-menu-item index="2-3">选项3</o-menu-item>
+            <o-submenu index="2-4">
+              <template slot="title">选项4</template>
+              <o-menu-item index="2-4-1">选项1</o-menu-item>
+              <o-menu-item index="2-4-2">选项2</o-menu-item>
+              <o-submenu index="2-4-3">
+                <template slot="title">选项4</template>
+                <o-menu-item index="2-4-3-1">选项1</o-menu-item>
+                <o-menu-item index="2-4-3-2">选项2</o-menu-item>
+                <o-menu-item index="2-4-3-3"></o-menu-item>
+              </o-submenu>
+            </o-submenu>
+          </o-submenu>
+          <o-menu-item index="3" >
+            <router-link to="/index/table">测试表格</router-link>
+          </o-menu-item>
+          <o-menu-item index="4">订单管理</o-menu-item>
+        </o-menu>
       </div>
     </div>
 
@@ -60,7 +63,11 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
-$menu_width: 11rem;
+$menu_width: 16rem;
+
+.leftmenu {
+  width: $menu_width;
+}
 .menu-admin {
   position: relative;
 }

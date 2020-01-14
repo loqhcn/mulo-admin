@@ -17,14 +17,19 @@ const router = new VueRouter({
       path: '/login',
       component: () => import('./views/Login.vue')
     },
+
     {
-      path: '/index',
+      path: '',
       name: 'home',
       component: () => import('./views/Index.vue'),
       children: [
-        { path: '', component: () => import('./views/dashboard/Dashboard.vue') }
+        { path: '/index', component: () => import('./views/dashboard/Dashboard.vue') },
+        { path: '/index/table', component: () => import('./views/table/Table.vue') }
+
+        
       ]
     },
+
   ]
 })
 

@@ -1,6 +1,6 @@
 <template>
-    <div class="">
-        仪表盘哦哦哦
+    <div>
+        添加用户
     </div>
 </template>
 

@@ -7,6 +7,8 @@ Vue.config.productionTip = false
 
 // mulo-ui
 import './../../mulo-ui/packpage/theme_default/src/index.scss'
+import './../../mulo-ui/packpage/theme_default/src/vuepc.scss'
+
 
 import MuloUiPc from './../../mulo-ui/packpage/vuepc'
 Vue.use(MuloUiPc);

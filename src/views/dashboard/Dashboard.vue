@@ -1,6 +1,8 @@
 <template>
-    <div class="">
-        仪表盘哦哦哦
+    <div class="panel">
+        <o-table>
+            
+        </o-table>
     </div>
 </template>
 

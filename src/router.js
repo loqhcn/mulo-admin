@@ -17,6 +17,11 @@ const router = new VueRouter({
       path: '/login',
       component: () => import('./views/Login.vue')
     },
+    // 列表页测试1
+    { path: '/test-table-1', component: () => import('./views/table/TestTable1.vue') },
+    { path: '/test-form-1', component: () => import('./views/form/TestForm1.vue') },
+
+
 
     {
       path: '',
@@ -24,11 +29,12 @@ const router = new VueRouter({
       component: () => import('./views/Index.vue'),
       children: [
         { path: '/index', component: () => import('./views/dashboard/Dashboard.vue') },
-        { path: '/index/table', component: () => import('./views/table/Table.vue') }
+        { path: '/index/table', component: () => import('./views/table/Table.vue') },
+        { path: '/index/test-table-1', component: () => import('./views/table/TestTable1.vue') },
 
-        
       ]
     },
+    
 
   ]
 })

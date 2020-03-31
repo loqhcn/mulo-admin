@@ -3,6 +3,11 @@
     <router-link to="/login">登录</router-link>
     <router-link to="/index">后台主页</router-link>
     <router-link to="/index/table">列表页</router-link>
+
+    <router-link to="/test-table-1">测试列表页</router-link>
+    <router-link to="/test-form-1">表单页测试</router-link>
+
+
   </div>
 </template>
 

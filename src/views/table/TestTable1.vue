@@ -1,13 +1,10 @@
 <template>
-  <div style="width:50vw;">
-
+  <div style="width:100vw;">
     <mulo-list-default
       :rows="[
           '排序','ID','分类名称','图标','首页展示','状态','操作'
       ]"
-      :list="list"
-
-      @get-list="getList"
+      api="http://s.zoo.cn/zoocoffee/goods_category/cates"
     >
       <!-- 列表 -->
       <template v-slot:item="{item}">
@@ -21,11 +18,12 @@
           <button class="btn">编辑</button>
           <button class="btn">删除</button>
         </td>
+
+        
       </template>
     </mulo-list-default>
 
     <!-- 弹出层-编辑 -->
-    
   </div>
 </template>
 
@@ -40,23 +38,21 @@ export default {
         { name: "罗戚洪", sex: "男", lovely: "女" }
       ]
     };
-
   },
-  created () {
+  created() {
     this.getList();
   },
   methods: {
     getList(page) {
       this.list = [];
-      this.$http.get('http://s.zoo.cn/zoocoffee/goods_category/cates').then(res=>{
-        // console.log(res);
-        this.list = res.data.list;
-
-      })
-    },
-    
-    
-  },
+      this.$http
+        .get("http://s.zoo.cn/zoocoffee/goods_category/cates")
+        .then(res => {
+          // console.log(res);
+          this.list = res.data.list;
+        });
+    }
+  }
 };
 </script>
 

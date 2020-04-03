@@ -20,6 +20,7 @@ const router = new VueRouter({
     // 列表页测试1
     { path: '/test-table-1', component: () => import('./views/table/TestTable1.vue') },
     { path: '/test-form-1', component: () => import('./views/form/TestForm1.vue') },
+    { path: '/test-select-row', component: () => import('./views/table/TestSelectRow.vue') },
 
 
 
@@ -31,6 +32,8 @@ const router = new VueRouter({
         { path: '/index', component: () => import('./views/dashboard/Dashboard.vue') },
         { path: '/index/table', component: () => import('./views/table/Table.vue') },
         { path: '/index/test-table-1', component: () => import('./views/table/TestTable1.vue') },
+        { path: '/index/test-select-row', component: () => import('./views/table/TestSelectRow.vue') },
+
 
       ]
     },

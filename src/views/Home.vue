@@ -6,6 +6,8 @@
 
     <router-link to="/test-table-1">测试列表页</router-link>
     <router-link to="/test-form-1">表单页测试</router-link>
+    
+    <router-link to="/test-select-row">列表选择</router-link>
 
 
   </div>

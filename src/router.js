@@ -21,7 +21,10 @@ const router = new VueRouter({
     { path: '/test-table-1', component: () => import('./views/table/TestTable1.vue') },
     { path: '/test-form-1', component: () => import('./views/form/TestForm1.vue') },
     { path: '/test-select-row', component: () => import('./views/table/TestSelectRow.vue') },
+    { path: '/form-create/index', component: () => import('./views//form-create/Index.vue') },
 
+
+    
 
 
     {

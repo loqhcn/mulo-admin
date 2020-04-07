@@ -10,6 +10,11 @@
     <router-link to="/test-select-row">列表选择</router-link>
 
 
+    <h1>表单</h1>
+
+    <router-link to="/form-create/index">表单</router-link>
+
+
   </div>
 </template>
 

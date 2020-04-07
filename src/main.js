@@ -18,6 +18,10 @@ Vue.config.productionTip = false
 //mulo-admin
 import muloAdmin from '../package/index.js'
 Vue.use(muloAdmin);
+
+import formCrate from '../package/form-create/index'
+Vue.use(formCrate);
+  
   
 console.log(muloAdmin)
    

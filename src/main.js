@@ -24,7 +24,12 @@ Vue.use(formCrate);
   
   
 console.log(muloAdmin)
-   
+
+//eleme
+
+import eleme from 'element-ui'
+Vue.use(eleme)
+
 //网络
 // import http from './core/http'
 // Vue.prototype.$http = http;

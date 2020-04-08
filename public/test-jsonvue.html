@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <link href="https://cdn.bootcss.com/element-ui/2.13.0/theme-chalk/index.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/vue/2.6.11/vue.js"></script>
+    <script src="https://cdn.bootcss.com/element-ui/2.13.0/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/json2vue/dist/json2vue.min.js"></script>
+
+    <div id="app"></div>
+
+    <script>
+
+        function mock() {
+            return {
+                rule: [
+                    {
+                        type: 'div',
+                        ref: 'btn',
+                        class:'asd',
+                        props: {
+                            disabled: true
+                        },
+                        children: [
+                            {
+                                type: 'ElButton',
+                                ref: 'btn',
+                                props: {
+                                    disabled: true
+                                },
+                                children: [
+                                    "按钮"
+                                ]
+                            },
+                            {
+                                type: 'ElButton',
+                                ref: 'btn',
+                                props: {
+                                    disabled: true
+                                },
+                                children: [
+                                    "按钮"
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                mounted() {
+                    console.log(this)
+                }
+            };
+        }
+        var jv = new jsonVue(mock())
+        var vm = jv.mount('#app');
+
+    </script>
+
+
+</body>
+
+</html>

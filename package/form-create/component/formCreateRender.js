@@ -12,7 +12,7 @@ export default class FormCreateRender {
 
     render() {
         let h = this.vm.$createElement;
-        let rule = this.vm.rules;
+        let rule = this.vm.rulesParseData;
 
 
         const vn = compileToFunctions('<el-button><div>123123444</div></el-button>').render.call(this.vm);
@@ -57,7 +57,7 @@ export default class FormCreateRender {
         if (!rule.vm) rule.vm = new Vue();
 
         setTemplateProps(rule);
-
+        
         //@ts-ignore
         const vn = compileToFunctions(rule.template).render.call(rule.vm);
 

@@ -1,6 +1,10 @@
 <template>
   <div>
-    <form-create :rules="rules"></form-create>
+    <form-create v-model="row" :rules="rules"></form-create>
+
+    <!-- <mulo-form-default>
+      <mulo-form-row title="字段名"></mulo-form-row>
+    </mulo-form-default>-->
 
     <button @click="pushBtn">增加组件</button>
   </div>
@@ -13,34 +17,64 @@ import jsonvue from "json2vue";
 export default {
   data() {
     return {
+      row: {
+        name: "罗戚洪",
+        name2: "mulo"
+      },
       rules: [
         {
           type: "div",
           ref: "btn0",
-          class: "asd",
-          props: {
-            disabled: false
-          },
+          class: "mulo-form",
+          props: {},
+
           children: [
+            // 表单基础
             {
-              type: "ElButton",
-              ref: "btn1",
-              "@click": "testClick",
-              props: {
-                disabled: false
-              },
-              on:{
-                click: this.testClick
-              },
-              children: ["按钮1", "按钮2", "按钮3"]
-            },
-            {
-              type: "ElButton",
-              ref: "btn2",
-              props: {
-                disabled: false
-              },
-              children: ["按钮"]
+              type: "mulo-form-default",
+              props: {},
+              children: [
+                // 表单row
+                {
+                  type: "mulo-form-row",
+                  props: {
+                    title: "姓名"
+                  },
+                  children: [
+                    {
+                      type: "input",
+                      props: {
+                        title: "姓名",
+                        value: ""
+                      },
+                      children: [],
+                      on: {
+                        input: event => {
+                          console.log('这个input',event)
+                          this.$emit("input", event);
+                        }
+                      }
+                    }
+
+                    
+                  ]
+                },
+                {
+                  type: "div",
+                  field:'name',
+                  props: {
+                    title: "姓名"
+                  },
+                  children: ["div测试"],
+                  on:{
+                    click:(e)=>{
+                      console.log(e)
+
+                    }
+                  }
+                },
+
+              ]
             }
           ]
         }

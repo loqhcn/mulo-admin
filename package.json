@@ -19,6 +19,7 @@
     "element-ui": "^2.13.0",
     "json2vue": "^0.0.3",
     "mulo-ui": "^0.1.15",
+    "view-design": "^4.1.3",
     "vue": "^2.6.10",
     "vue-router": "^3.1.3",
     "vuedraggable": "^2.23.2",

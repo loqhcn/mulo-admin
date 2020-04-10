@@ -1,10 +1,12 @@
 <template>
   <div class="mulo-list-default">
+
     <!-- 筛选栏目 -->
     <div class="filter">
       <!-- 解析筛选字段 -->
-      <mulo-filter-row @filter="filter"></mulo-filter-row>
+      <mulo-filter-row @filter="onFilter" :rules="filter"></mulo-filter-row>
     </div>
+
     <slot name="table" :vmdata="$data" >
       <table class="table">
         <slot name="thead" :rows="rows">
@@ -25,7 +27,7 @@
           <tbody>
             <!-- # 列表 -->
             <tr v-for="(li,index) in list" :key="index">
-              <slot name="item" :item="li">
+              <slot name="item" :item="li" :index="index">
                 <td>{{index}}</td>
               </slot>
             </tr>
@@ -77,6 +79,14 @@ export default {
         return [];
       }
     },
+    // 筛选配置
+    filter:{
+      type:Object,
+      default:()=>{
+        return {}
+      }
+    },
+
     refreshTag: {
       type: Number
     },
@@ -200,7 +210,7 @@ export default {
      * 筛选提交
      *
      */
-    filter(res) {
+    onFilter(res) {
       let filters = res.data;
       this.moreParams[rulesConfig.filters.paramName] = filters;
       this.getList(true);

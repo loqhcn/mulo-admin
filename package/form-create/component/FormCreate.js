@@ -77,9 +77,14 @@ export default {
                     //自定义事件监听
                     // on:li.on,
                     on: {
-
+                        //设置的其它事件不做中间处理
+                        ...$on,
                         input(e) {
                             li.on && li.on.input && li.on.input(e);
+                            
+                            
+                            
+                            //事件冒泡阻止
                             event.stopPropagation()
                         }
 

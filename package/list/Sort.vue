@@ -1,7 +1,7 @@
 <template>
   <div>
     <slot name="tip"></slot>
-    <list-default ref="list_default" :api="api" :params="params">
+    <list-default ref="list_default" :api="api" :params="params" :filter="filter">
       <template v-slot:table="{vmdata}">
         <!-- <draggable v-model="vmdata.list" tag="tbody">
           <tr v-for="item in vmdata.list" :key="item.name">
@@ -26,7 +26,7 @@
 
           <draggable v-model="vmdata.list" tag="tbody" @end="onEnd(vmdata.list ,$event)">
             <tr v-for="(li,index) in vmdata.list" :key="index">
-              <slot name="item" :item="li">
+              <slot name="item" :item="li" :index="index">
                 <td>{{index}}</td>
               </slot>
             </tr>
@@ -53,6 +53,13 @@ export default {
       type: Array,
       default: () => {
         return [];
+      }
+    },
+    // 筛选配置
+    filter: {
+      type: Object,
+      default: () => {
+        return {};
       }
     },
     params: {

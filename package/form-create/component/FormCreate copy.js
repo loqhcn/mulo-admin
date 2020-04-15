@@ -2,15 +2,13 @@ import FormCreateRender from './formCreateRender'
 export default {
     name: 'form-create',
     props: {
-        // 生成规则配置
-        value: {
-            type: Object,
-            default: () => {
-                return {
-
-                }
-            },
-        },
+        //生成规则配置
+        // rules: {
+        //     type: Array,
+        //     default: () => {
+        //         return []
+        //     },
+        // },
 
     },
     data() {
@@ -44,14 +42,14 @@ export default {
                                             type: "input",
                                             props: {},
                                             domProps: {
-                                                value: this.value.name
+                                                value: this.name
                                             },
                                             children: [],
                                             on: {
                                                 input: event => {
 
-                                                    // this.$emit("input", event);
-                                                    // console.log("这个input", event, this.name);
+                                                    this.$emit("input", event);
+                                                    console.log("这个input", event, this.name);
 
                                                 }
                                             }
@@ -69,20 +67,13 @@ export default {
                                             type: "el-input",
                                             field: "name2",
                                             props: {
-                                                value: this.value.name2
+                                                value: ""
                                             },
-                                            // domProps: {
-                                            //     value: this.value.name2
-                                            // },
                                             children: [],
                                             on: {
                                                 input: event => {
-                                                    // console.log("这个input", event);
-                                                    let $value = {
-                                                        ...this.value
-                                                    }
-                                                    $value['name2'] =  event;
-                                                    this.$emit("input", $value);
+                                                    console.log("这个input", event);
+                                                    this.$emit("input", event);
                                                 }
                                             }
                                         }
@@ -163,8 +154,7 @@ export default {
                     //组件 prop
                     props: li.props,
                     domProps: {
-                        value: this.row.name,
-                        // 'v-model':this.row.name,
+                        value: this.row.name
                     },
                     props: li.props,
                     nativeOn: li.nativeOn,
@@ -183,8 +173,8 @@ export default {
                         input(e) {
 
 
-                            // _this.$emit('input', event.target.value)
-                            // console.log('input emit', event.target.value)
+                            _this.$emit('input', event.target.value)
+                            console.log('input emit',event.target.value)
                             //触发原本事件
                             li.on && li.on.input && li.on.input(e);
 

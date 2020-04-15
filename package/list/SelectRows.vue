@@ -1,14 +1,17 @@
 <template>
-  <div class="test-select-row">
+  <div class="mulo-select-row">
     <!-- 选择列表 -->
-    <list-default 
-    ref="list_default" 
-    :params="params" 
-    :render-list="renderData"
-    :api="api" :rows="rowsData"
-     >
-      <!--  -->
-      <template v-slot:item="{item}">
+    <list-default
+      ref="list_default"
+      :params="moreParams"
+      :render-list="renderData"
+      :api="api"
+      :rows="rowsData"
+      :filter="filter"
+      :params-update-reload="paramsUpdateReload"
+    >
+      <!-- 列表渲染 -->
+      <template v-slot:item="{item,index}">
         <td class="check-row">
           <input
             type="checkbox"
@@ -16,7 +19,7 @@
             v-model="item.selectRows_isSelected"
           />
         </td>
-        <slot name="item" :item="item">
+        <slot name="item" :item="item" :index="index">
           <td>未渲染列表</td>
         </slot>
       </template>
@@ -24,7 +27,8 @@
 
     <div class="footer-btns">
       <div class="operation">
-        <input v-model="onlyShowSelected" type="checkbox" />只显示已选择的
+        <input v-model="onlyShowSelected" type="checkbox" />
+        <label @click="onlyShowSelected=!onlyShowSelected">只显示已选择的</label>
       </div>
       <button @click="cancel" class="btn btn-danger">取消</button>
       <button @click="selectSuccess" class="btn btn-success">确认</button>
@@ -36,8 +40,11 @@
 
 <script>
 import ListDefault from "./Default";
+import { ListDefualtMixin } from "./../mixins/ListMixin";
+
 export default {
-  name:'select-rows',
+  name: "select-rows",
+  mixins: [ListDefualtMixin],
   components: {
     "list-default": ListDefault
   },
@@ -58,16 +65,17 @@ export default {
   },
 
   props: {
-    // 字段数据
-    rows: {
-      type: Array,
-      default: () => {
-        return [];
-      }
+    //当参数改变时 自动重新加载列表
+    paramsUpdateReload: {
+      type: Boolean,
+      default: false
     },
-    refreshTag:{
-      type:Number,
+
+    // 刷新标识 * 计划用于操作后刷新列表,暂时没用
+    refreshTag: {
+      type: Number
     },
+
     // 已选中的项目 初始化或者更新
     selecteds: {
       type: Array,
@@ -75,15 +83,10 @@ export default {
         return [];
       }
     },
-    // 选择
+    // 选择的主键
     listIdKey: {
       type: String,
       default: "id"
-    },
-    // 接口地址
-    api: {
-      type: String,
-      default: ""
     }
   },
   created() {
@@ -96,7 +99,7 @@ export default {
       // 只显示已选择的内容
       onlyShowSelected: false,
       // 接口请求参数
-      params: {
+      moreParams: {
         onlyShowSelected: false
       }
     };
@@ -122,14 +125,14 @@ export default {
       //   this.$refs.list_default.loadLostData(true, {}, () => {});
       // });
       // 编辑成功
-      this.$emit('success',{
-        selecteds:this.selectedsData,
+      this.$emit("success", {
+        selecteds: this.selectedsData
       });
     },
     //取消选择
     cancel() {
-       this.$emit('cancel',{
-        selecteds:this.selectedsData,
+      this.$emit("cancel", {
+        selecteds: this.selectedsData
       });
     },
 
@@ -152,11 +155,11 @@ export default {
     /**
      * 重新加载列表
      */
-    reLoadList( reset ) {
+    reLoadList(reset) {
       //更新请求参数
-      this.params = {
-        onlyShowSelected: this.onlyShowSelected ? 1:0,
-        selecteds:this.selectedsData,
+      this.moreParams = {
+        onlyShowSelected: this.onlyShowSelected ? 1 : 0,
+        selecteds: this.selectedsData
       };
       //加载列表
       this.$nextTick(() => {
@@ -182,8 +185,10 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.footer-btns {
-  text-align: right;
+<style lang="scss" >
+.mulo-select-row {
+  .footer-btns {
+    text-align: right;
+  }
 }
 </style>

@@ -6,12 +6,7 @@
       <mulo-form-row title="字段名"></mulo-form-row>
     </mulo-form-default>-->
 
-
-
     <button @click="pushBtn">增加组件</button>
-
-
-  
   </div>
 </template>
 
@@ -31,83 +26,7 @@ export default {
         name: "罗戚洪",
         name2: "mulo"
       },
-      rules: [
-        {
-          type: "div",
-          ref: "btn0",
-          class: "mulo-form",
-          props: {},
-
-          children: [
-            // 表单基础
-            {
-              type: "mulo-form-default",
-              props: {},
-              children: [
-                // 表单row
-                {
-                  type: "mulo-form-row",
-                  props: {
-                    title: "姓名"
-                  },
-                  children: [
-                    {
-                      type: "el-input",
-                      props: {
-                        value: ""
-                      },
-                      children: [],
-                      on: {
-                        input: event => {
-                          console.log("这个input", event);
-                          this.$emit("input", event);
-                        }
-                      }
-                    }
-                  ]
-                },
-                // 表单row2
-                {
-                  type: "mulo-form-row",
-                  props: {
-                    title: "姓名2"
-                  },
-                  children: [
-                    {
-                      type: "el-input",
-                      field: "name2",
-                      props: {
-                        value: ""
-                      },
-                      children: [],
-                      on: {
-                        input: event => {
-                          console.log("这个input", event);
-                          this.$emit("input", event);
-                        }
-                      }
-                    }
-                  ]
-                },
-
-                {
-                  type: "div",
-                  field: "name",
-                  props: {
-                    title: "姓名"
-                  },
-                  children: ["div测试"],
-                  on: {
-                    click: e => {
-                      console.log(e);
-                    }
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      ]
+      rules: [],
     };
   },
   methods: {

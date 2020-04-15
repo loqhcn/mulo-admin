@@ -12,6 +12,9 @@
 import { Checkbox } from "element-ui";
 export default {
   name: "checkbox-group",
+  components: {
+    [Checkbox.name]: Checkbox
+  },
   watch: {
     selectedsData(newValue, oldValue) {
       if (this.resetIng) {

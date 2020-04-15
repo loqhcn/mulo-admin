@@ -20,3 +20,8 @@ export function getType(arg) {
     str = str.replace(str[0], str[0].toLowerCase());
     return str;
 }
+
+
+export function copyObj(obj) {
+    return JSON.parse(JSON.stringify(obj))
+}

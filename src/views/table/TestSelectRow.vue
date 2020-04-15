@@ -6,12 +6,13 @@
           :rows="[
               'ID','商品名称','图标','首页展示','状态','操作'
           ]"
-          list-id-key="goods_id"
+          list-id-key="id"
           :selecteds="[
             32,33
           ]"
-          api="http://s.zoo.cn/zoocoffee/goods_category/goods_list"
+          api="http://admin-tp6.lqh.cn/apis/news/index"
           @success="success"
+          :params-update-reload="false"
         >
           <!-- 列表 -->
           <template v-slot:item="{item}">
@@ -53,7 +54,7 @@ export default {
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: rgba(0,0,0,0.6);
+  background-color: rgba(255,255,255,0.6);
 }
 .shadow-container {
   box-sizing: border-box;

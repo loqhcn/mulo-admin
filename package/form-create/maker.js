@@ -1,3 +1,8 @@
+/**
+ * 构建vnode规则
+ * 
+ * 
+ */
 class maker {
 
     constructor() {
@@ -17,7 +22,53 @@ class maker {
     validate(rule) {
 
         return this;
-        
+
+    }
+
+    
+
+
+
+
+    banner() {
+
+    }
+
+    upload() {
+
+    }
+
+    /**
+     * 获取组件名称
+     * 
+     */
+    getComponentName() {
+
+    }
+
+    /**
+     * 设置布局方式为col
+     * 
+     */
+    col() {
+
+    }
+
+    /**
+     * 表单验证规则
+     * 
+     */
+    validate(){
+
+    }
+
+
+    /**
+     * 
+     * 
+     */
+    props() {
+
     }
 
     /**
@@ -28,34 +79,34 @@ class maker {
 
     }
 
+}
 
-    input(){
 
-    }
 
-    img(){
+/**
+ * 代理调用maker类
+ * 
+ */
+class MakerCall {
 
-    }
-    
-    banner(){
-
-    }
-    
-    upload(){
+    constructor() {
 
     }
 
-    /**
-     * 获取组件名称
-     * 
-     */
-    getComponentName(){
-        
+
+    //字段
+
+    input() {
+
     }
 
-    
+    //图片
+    img() {
 
-    
-    
+    }
+
 
 }
+
+export default new MakerCall();
+

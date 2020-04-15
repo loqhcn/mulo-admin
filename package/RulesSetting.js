@@ -7,7 +7,10 @@ class RulesSetting {
                 //传输到接口的字段名
                 paramName: 'filters',
 
-            }
+            },
+            
+            
+
         }
     }
 

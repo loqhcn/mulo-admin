@@ -14,22 +14,22 @@
 
       <!-- 筛选栏目 -->
       <template v-for="(li,index) in rulesData.filters">
-        <!-- 输入框搜索 -->
-        <template v-if="li.type=='input'">
-          <div :key="index" class="item">
-            <div v-if="li.title" class="field-name">{{li.title}}</div>
+        <div
+          :key="index"
+          :class="`item ${li.className?li.className:''} ${rulesData.joinClass?li.field:''}`"
+        >
+          <div v-if="li.title" class="field-name">{{li.title}}</div>
+          <!-- 输入框搜索 -->
+          <template v-if="li.type=='input'">
             <el-input
               v-model="rulesModel[ li.field ]"
               class="search-row"
               :placeholder="li.attr.placeholder || '请输入'+(li.title || li.field)"
             ></el-input>
-          </div>
-        </template>
+          </template>
 
-        <!-- 选择框 -->
-        <template v-if="li.type=='select'">
-          <div :key="index" class="item">
-            <div v-if="li.title" class="field-name">{{li.title}}</div>
+          <!-- 选择框 -->
+          <template v-if="li.type=='select'">
             <el-select v-model="rulesModel[ li.field ]" clearable placeholder="请选择">
               <el-option
                 v-for="item in li.selects"
@@ -38,13 +38,10 @@
                 :value="item.key"
               ></el-option>
             </el-select>
-          </div>
-        </template>
+          </template>
 
-        <!-- 时间范围筛选 -->
-        <template v-if="li.type=='datetimerange'">
-          <div :key="index" class="item">
-            <div v-if="li.title" class="field-name">{{li.title}}</div>
+          <!-- 时间范围筛选 -->
+          <template v-if="li.type=='datetimerange'">
             <el-date-picker
               v-model="rulesModel[ li.field ]"
               type="datetimerange"
@@ -56,13 +53,10 @@
               end-placeholder="结束日期"
               align="right"
             ></el-date-picker>
-          </div>
-        </template>
+          </template>
 
-        <!-- 时间范围筛选 -->
-        <template v-if="li.type=='timerange'">
-          <div :key="index" class="item">
-            <div v-if="li.title" class="field-name">{{li.title}}</div>
+          <!-- 时间范围筛选 -->
+          <template v-if="li.type=='timerange'">
             <el-time-picker
               is-range
               v-model="rulesModel[ li.field ]"
@@ -75,36 +69,30 @@
                   format: li.format || 'HH:mm:ss'
                 }"
             ></el-time-picker>
-          </div>
-        </template>
+          </template>
 
-        <!-- 多选选择 -->
-        <template v-if="li.type=='checkboxgroup' ">
-          <div :key="index" class="item inline">
-            <div v-if="li.title" class="field-name">{{li.title}}</div>
+          <!-- 多选选择 -->
+          <template v-if="li.type=='checkboxgroup' ">
             <checkbox-group v-model="rulesModel[ li.field ]" :options="li.options"></checkbox-group>
-          </div>
-        </template>
+          </template>
 
-        <!-- 数字范围 -->
+          <!-- 数字范围 -->
 
-        <template v-if="li.type=='numberrange' ">
-          <div :key="index" class="item">
-            <div v-if="li.title" class="field-name">{{li.title}}</div>
+          <template v-if="li.type=='numberrange' ">
             <number-range v-model="rulesModel[ li.field ]" :placeholders="li.placeholders"></number-range>
-          </div>
-        </template>
+          </template>
+        </div>
       </template>
 
       <!-- 提交操作 -->
       <div v-if="!(rulesData.filters && rulesData.filters.length)" class="item">
-        <el-button @click="submit">搜索</el-button>
+        <el-button @click="submit">查询</el-button>
       </div>
     </div>
 
     <!-- 操作栏目 -->
     <div v-if="rulesData.filters && rulesData.filters.length" class="operation-row">
-      <el-button @click="submit">搜索</el-button>
+      <el-button @click="submit">查询</el-button>
       <el-button @click="reset">重置</el-button>
     </div>
   </div>
@@ -273,7 +261,6 @@ export default {
       // 筛选的数据
       rulesModel: {
         search: "",
-        status: 0
       },
       // 日期时间选择范围的快捷选择
       pickerOptions: {
@@ -344,6 +331,13 @@ export default {
 
       //筛选详细配置
       if (rules.filters) {
+        // 规则处理
+        for (let index = 0; index < rules.filters.length; index++) {
+          const element = rules.filters[index];
+          if (!element.attr) {
+            rules.filters[index].attr = {};
+          }
+        }
         this.rulesData.filters = rules.filters;
       }
     }
@@ -351,27 +345,33 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
 $spaceDefault: 10px;
 
-.filter-rows {
-  padding: $spaceDefault 0;
-  display: flex;
-  flex-wrap: wrap;
-  .item {
-    padding: $spaceDefault;
-    padding-left: 0;
+.mulo-filters {
+  .filter-rows {
+    padding: $spaceDefault 0;
     display: flex;
-    align-items: center;
-    .field-name {
-      padding-right: $spaceDefault/2;
-    }
-    &.inline {
-      min-width: 100%;
+    flex-wrap: wrap;
+    .item {
+      padding: $spaceDefault;
+      padding-left: 0;
+      display: flex;
+      align-items: center;
+      .field-name {
+        padding-right: $spaceDefault/2;
+        word-break: keep-all;
+        white-space: nowrap;
+        overflow: hidden;
+        min-width: 69px;
+      }
+      &.inline {
+        min-width: 100%;
+      }
     }
   }
-}
-.search-row {
-  width: 150px;
+  .search-row {
+    width: 150px;
+  }
 }
 </style>

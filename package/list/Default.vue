@@ -1,13 +1,16 @@
 <template>
   <div class="mulo-list-default">
-
     <!-- 筛选栏目 -->
-    <div class="filter">
-      <!-- 解析筛选字段 -->
-      <mulo-filter-row @filter="onFilter" :rules="filter"></mulo-filter-row>
-    </div>
-
-    <slot name="table" :vmdata="$data" >
+    <slot name="filter-before"></slot>
+    <slot name="filter">
+      <div class="filter">
+        <!-- 解析筛选字段 -->
+        <mulo-filter-row @filter="onFilter" :rules="filter"></mulo-filter-row>
+      </div>
+    </slot>
+    <slot name="filter-after"></slot>
+    <!-- 整个表格 -->
+    <slot name="table" :vmdata="$data">
       <table class="table">
         <slot name="thead" :rows="rows">
           <thead>
@@ -23,6 +26,7 @@
             </tr>
           </thead>
         </slot>
+        <!-- 表格主体 -->
         <slot name="tbody" :vmdata="$data">
           <tbody>
             <!-- # 列表 -->
@@ -36,22 +40,25 @@
       </table>
     </slot>
 
-    <div class="table-footer">
-      <div>
-        <!-- 分页 -->
-        <pagination
-          @current-change="currentChange"
-          :total="total"
-          :page-size="psize"
-          :current-page="page"
-          @size-change="sizeChange"
-          layout="total, sizes, prev, pager, next, jumper"
-        ></pagination>
+    <!-- 表格底部操作 -->
+    <slot name="tfooter">
+      <div class="table-footer">
+        <div>
+          <!-- 分页 -->
+          <pagination
+            @current-change="currentChange"
+            :total="total"
+            :page-size="psize"
+            :current-page="page"
+            @size-change="sizeChange"
+            layout="total, sizes, prev, pager, next, jumper"
+          ></pagination>
+        </div>
+        <slot name="footer-right">
+          <div class="footer-right"></div>
+        </slot>
       </div>
-      <slot name="footer-right">
-        <div class="footer-right"></div>
-      </slot>
-    </div>
+    </slot>
   </div>
 </template>
 
@@ -65,50 +72,16 @@ import FilterRow from "./FilterRow";
 import RulesSetting from "./../RulesSetting";
 const rulesConfig = RulesSetting.getRules();
 
+import { ListDefualtMixin } from "./../mixins/ListMixin";
+
 export default {
   name: "list-default",
+  mixins: [ListDefualtMixin],
   components: {
     pagination: Pagination,
     [FilterRow.name]: FilterRow
   },
-  props: {
-    // 字段数据
-    rows: {
-      type: Array,
-      default: () => {
-        return [];
-      }
-    },
-    // 筛选配置
-    filter:{
-      type:Object,
-      default:()=>{
-        return {}
-      }
-    },
-
-    refreshTag: {
-      type: Number
-    },
-    //接口地址
-    api: {
-      default: ""
-    },
-    //请求参数
-    params: {
-      type: Object,
-      default: () => {
-        return {};
-      }
-    },
-    //数据渲染中间操作
-    renderList: {
-      type: Function,
-      default: list => {
-        return list;
-      }
-    }
-  },
+  props: {},
   data() {
     return {
       key: "",
@@ -124,6 +97,16 @@ export default {
   },
   created() {
     this.getList();
+  },
+  watch: {
+    params: {
+      handler(newValue, oldValue) {
+        if (this.paramsUpdateReload) {
+          this.getList(true);
+        }
+      },
+      deep: true
+    }
   },
   methods: {
     isCheckEd(item) {},

@@ -76,7 +76,10 @@ export default {
       let maker = maker.type("input").props({
         name: "罗戚洪",
         value: "罗戚洪"
-      });
+      }).
+      validate({
+        
+      })
     },
 
     pushBtn() {

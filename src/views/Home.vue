@@ -20,6 +20,9 @@
     <router-link to="/tools/status">状态修改</router-link>
     <router-link to="/tools/modal">模态框</router-link>
      
+     <h1>其他测试页面</h1>
+    <router-link to="/test/vnode">vnode测试</router-link>
+
 
   </div>
 </template>

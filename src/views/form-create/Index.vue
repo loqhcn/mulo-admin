@@ -7,6 +7,14 @@
     </mulo-form-default>-->
 
     <button @click="pushBtn">增加组件</button>
+
+    <div>
+      <h1>测试</h1>
+      <div>
+        <button @click="ruleTest">规则测试</button>
+        <button @click="makerTest">maker生成测试</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -15,6 +23,12 @@ import jsonToVue from "./../../../package/form-create/jsonToVue/index";
 import jsonvue from "json2vue";
 
 import CheckBoxGroup from "./../../../package/checkbox-group/CheckBoxGroup";
+
+// 规则编译
+import RuleParse from "./../../../package/form-create/core/RuleParse";
+import maker from "./../../../package/form-create/factory/maker";
+
+// maker构建器
 
 export default {
   components: {
@@ -26,10 +40,45 @@ export default {
         name: "罗戚洪",
         name2: "mulo"
       },
-      rules: [],
+
+      rules: [
+        {
+          type: "input",
+          title: "商品名称",
+          field: "goods_name",
+          value: "iphone 7",
+          col: {
+            span: 12,
+            labelWidth: 150
+          },
+          props: {
+            type: "text"
+          },
+          validate: [
+            { required: true, message: "请输入goods_name", trigger: "blur" }
+          ]
+        }
+      ]
     };
   },
   methods: {
+    /**
+     *
+     */
+    ruleTest() {
+      let obj = new RuleParse(this);
+
+      let rule = obj.parse(this.rules);
+      console.log("编译后规则", rule);
+    },
+
+    makerTest() {
+      let maker = maker.type("input").props({
+        name: "罗戚洪",
+        value: "罗戚洪"
+      });
+    },
+
     pushBtn() {
       this.rules.push({
         type: "ElInput",

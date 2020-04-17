@@ -24,7 +24,9 @@ const router = new VueRouter({
     { path: '/form-create/index', component: () => import('./views//form-create/Index.vue') },
 
 
+    // 其他测试页面
     
+    { path: '/test/vnode', component: () => import('./views/test/vnode.js') },
 
 
     {

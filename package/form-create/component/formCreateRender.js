@@ -15,18 +15,16 @@ export default class FormCreateRender {
         this.vm = vm
     }
 
-
+    /**
+     * @logic 读取jsonvue数据, 生成vnode
+     * 
+     * 
+     */
     render() {
         let h = this.vm.$createElement;
         let rule = this.vm.rulesParseData;
-
-
-        const vn = compileToFunctions('<el-button><div>123123444</div></el-button>').render.call(this.vm);
-        console.log(vn)
-
-
+        
         //@ts-ignore
-
         if (isType(rule, 'Function')) {
             rule = (rule).call(this.vm);
         }
@@ -34,7 +32,6 @@ export default class FormCreateRender {
         let data = Array.isArray(rule) ? this.vm.$createElement('div', {}, rule.map(rule => {
             return this.renderRule(rule);
         })) : this.renderRule(rule);
-        console.log(data)
 
         // 渲染组件规则
         return data
@@ -43,7 +40,7 @@ export default class FormCreateRender {
 
     /**
      * 渲染所有子级
-     * 
+     * @logic 遍历children生成整个vnode
      * @param {*} rule 
      */
     renderRule(rule) {
@@ -51,7 +48,6 @@ export default class FormCreateRender {
             return this.renderTemplate(rule);
         } else {
             const children = this.renderChildren(rule.children || []);
-            // console.log(rule.type, getProps(rule))
             return this.vm.$createElement(rule.type, getProps(rule), children);
         }
     }
@@ -96,7 +92,6 @@ function getProps(rule) {
         if (rule[name] !== undefined)
             props[name] = rule[name];
     });
-    console.log(props, rule);
     return props;
 }
 

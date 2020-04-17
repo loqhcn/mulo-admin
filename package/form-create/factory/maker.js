@@ -25,15 +25,7 @@ class maker {
 
     }
 
-    
-
-
-
-
-    banner() {
-
-    }
-
+ 
     upload() {
 
     }
@@ -50,8 +42,8 @@ class maker {
      * 设置布局方式为col
      * 
      */
-    col() {
-
+    col(col) {
+        this.rule.col = col;
     }
 
     /**
@@ -59,7 +51,8 @@ class maker {
      * 
      */
     validate(){
-
+        
+        return this;
     }
 
 
@@ -78,6 +71,14 @@ class maker {
     toJson() {
 
     }
+    
+    /**
+     * 子组件 参数为jsonvue的参数
+     * 
+     */
+    children(){
+
+    }
 
 }
 
@@ -90,22 +91,30 @@ class maker {
 class MakerCall {
 
     constructor() {
+        
+    }
+
+    getObj(){
 
     }
 
+    type(){
+        
+    }
 
     //字段
 
     input() {
-
+        
     }
 
     //图片
     img() {
 
+
     }
 
-
+    
 }
 
 export default new MakerCall();

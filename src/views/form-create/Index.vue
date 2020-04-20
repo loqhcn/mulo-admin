@@ -40,12 +40,11 @@ export default {
         name: "罗戚洪",
         name2: "mulo"
       },
-
       rules: [
         {
-          type: "input",
+          type: "el-input",
           title: "商品名称",
-          field: "goods_name",
+          field: "name",
           value: "iphone 7",
           col: {
             span: 12,
@@ -71,15 +70,21 @@ export default {
       let rule = obj.parse(this.rules);
       console.log("编译后规则", rule);
     },
+    getRule(){
+      return [
+        maker.input('')
+      ]
+    },
 
     makerTest() {
-      let maker = maker.type("input").props({
-        name: "罗戚洪",
-        value: "罗戚洪"
-      }).
-      validate({
-        
-      })
+      let Datamaker = maker
+        .input("input","input",123)
+        .props({
+          name: "罗戚洪",
+          value: "罗戚洪"
+        })
+        .validate([{ require: true }]);
+      console.log(Datamaker.toJson());
     },
 
     pushBtn() {

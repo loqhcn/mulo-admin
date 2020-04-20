@@ -1,121 +1,117 @@
+import { propsNames, fieldNames } from './../core/rule'
+import { builtIn } from './../ui/element/rule'
+
 /**
- * 构建vnode规则
+ * 构建form-create-json规则
  * 
  * 
  */
-class maker {
+class Maker {
 
-    constructor() {
+    constructor(type) {
+        //调用函数设置规则
+        this.rules = {
 
-        this.validate = false
-        this.rules = [
-
-        ]
-        this.type = '';
-
-    }
-
-    /**
-     * 验证规则
-     * @param {*} rule 
-     */
-    validate(rule) {
-
-        return this;
+        }
+        //组件类型
+        this.type = type;
+        //maker组件标识
+        this.__ismaker = true;
 
     }
 
- 
-    upload() {
-
-    }
-
-    /**
-     * 获取组件名称
-     * 
-     */
-    getComponentName() {
-
-    }
-
-    /**
-     * 设置布局方式为col
-     * 
-     */
-    col(col) {
-        this.rule.col = col;
-    }
-
-    /**
-     * 表单验证规则
-     * 
-     */
-    validate(){
+    // 绑定默认值
+    value( value ){
+        console.log(value)
+        this.rules.attrs = Object.assign( {
+            value: value
+        },( this.rules.attrs || {} ))
         
+
         return this;
     }
 
-
-    /**
-     * 
-     * 
-     */
-    props() {
-
-    }
 
     /**
      * 生成最终生成表单的json
      * 
      */
     toJson() {
+        let values = {
 
-    }
-    
-    /**
-     * 子组件 参数为jsonvue的参数
-     * 
-     */
-    children(){
-
+        }
+        let actionNames = [
+            ...propsNames,
+            ...fieldNames
+        ];
+        actionNames.forEach((name) => {
+            values[name] = this.rules[name];
+        })
+        return {
+            type: this.type,
+            ...values
+        }
     }
 
 }
 
+//注册内部函数 用于调用链式函数
+let actionNames = [
+    ...propsNames,
+    ...fieldNames
+];
+actionNames.forEach((name) => {
+
+    Maker.prototype[name] = function (val) {
+        this.rules[name] = val;
+        return this;
+    }
+})
 
 
 /**
  * 代理调用maker类
  * 
+ *
+ * 
  */
 class MakerCall {
 
-    constructor() {
-        
+    type(type) {
+        let obj = new Maker(type)
+        console.log(obj)
+        return obj;
     }
 
-    getObj(){
 
-    }
-
-    type(){
-        
-    }
-
-    //字段
-
-    input() {
-        
-    }
-
-    //图片
-    img() {
-
-
-    }
-
-    
 }
+
+/**
+ * 生成内置组件的调用函数
+ * 
+ * @已知问题 目前没有考虑 引入其他组件库 例如iview的使用
+ * 
+ */
+for (let x in builtIn) {
+
+    let label = x;
+    let uiLabel = builtIn[x]
+
+    /**
+     * 
+     * @param name 字段名
+     * @param field 绑定data的字段
+     * @param value 值
+     * 
+     * @return {Maker}
+     */
+    MakerCall.prototype[label] = function (title, field, value) {
+        console.log(title,field,value)
+        return new Maker(uiLabel).title(title).field(field).value(value);
+    }
+}
+
+
 
 export default new MakerCall();
 

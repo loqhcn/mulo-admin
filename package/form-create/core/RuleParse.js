@@ -3,6 +3,8 @@ import {
     getType
 } from './../../utils/util'
 
+import { builtIn } from './../ui/element/rule'
+
 /**
  * 表单配置规则生成为 jsonvue的规则(由jsonvue转换为vnode后呈现)
  * 
@@ -13,32 +15,7 @@ export default class RuleParse {
     constructor(vm) {
         this.vm = vm;
         // # 内置组件规则
-        this.builtIn = {
-            modal: 'el-dialog',
-            button: 'el-button',
-            icon: 'i',
-            slider: 'el-slider',
-            rate: 'el-rate',
-            upload: 'fc-elm-upload',
-            cascader: 'el-cascader',
-            colorPicker: 'el-color-picker',
-            timePicker: 'el-time-picker',
-            datePicker: 'el-date-picker',
-            'switch': 'el-switch',
-            select: 'fc-elm-select',
-            checkbox: 'fc-elm-checkbox',
-            radio: 'fc-elm-radio',
-            inputNumber: 'el-input-number',
-            input: 'el-input',
-            formItem: 'el-form-Item',
-            form: 'el-form',
-            frame: 'fc-elm-frame',
-            col: 'el-col',
-            row: 'el-row',
-            tree: 'fc-elm-tree',
-            autoComplete: 'el-autocomplete',
-            group: 'fc-elm-group',
-        }
+        this.builtIn = builtIn
 
         this.formContainer = {
             type: 'div'
@@ -54,8 +31,6 @@ export default class RuleParse {
         }
 
         // 操作配置
-
-        
 
     }
 
@@ -97,7 +72,7 @@ export default class RuleParse {
     /**
      * 生成表单字段
      * 
-     * @param {Object} 目前仅支持单个字段 
+     * @param {FormCreateRule} 目前仅支持单个字段 
      * 
      * @return FieldRule el-form-item
      */
@@ -130,18 +105,25 @@ export default class RuleParse {
             },
 
         }
-
+        let _this = this;
         //规则
         let li = rule;
         let $on = this.getActions(li.on);
+
+        console.log(_this.vm.value[li.field]);
+
+
         let $field = {
-            type: this.getFieldType(li.type),
+            type: li.type,
             class: li.class,
             style: li.style,
-            attrs: li.attrs,
-            props: li.props,
+            attrs: {
+
+            },
+            props: {
+            },
             domProps: {
-                // value: this.row.name,
+
             },
             props: li.props,
             nativeOn: li.nativeOn,
@@ -151,22 +133,30 @@ export default class RuleParse {
             key: li.key,
             ref: li.ref,
             refInFor: li.refInFor,
+            model: {
+                value: _this.vm.value[li.field],
+                callback: function ($$v) {
+                    console.log('modal callback')
+                    _vm.$set(_this.vm.value, li.field , $$v)
+                },
+            },
             on: {
                 //设置的其它事件不做中间处理
                 ...$on,
                 input(e) {
-                    console.log(e)
-                    //触发原本事件
-                    li.on && li.on.input && li.on.input(e);
-                    //事件冒泡阻止
-                    event.stopPropagation()
+                    // console.log('getFormField - on input', e);
+                    // _this.vm.value[li.field] = e;
+                    // //触发原本事件
+                    // li.on && li.on.input && li.on.input(e);
+                    // //事件冒泡阻止
+                    // event.stopPropagation()
 
                 },
                 change(e) {
-                    //触发原本事件
-                    li.on && li.on.change && li.on.change(e);
-                    //事件冒泡阻止
-                    event.stopPropagation()
+                    // //触发原本事件
+                    // li.on && li.on.change && li.on.change(e);
+                    // //事件冒泡阻止
+                    // event.stopPropagation()
                 }
 
             }
@@ -186,7 +176,7 @@ export default class RuleParse {
                 $field
             ]
         }
-
+        console.log('字段规则',$field);
         return $rule;
     }
 

@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 import { compile, compileToFunctions, ssrCompileToFunctions } from 'vue-template-compiler'
 import { isString, isType } from "./../util";
-
+import { propsNames } from './../core/rule'
 
 /**
  * @todo 解析rules参数 , 生成组件的模板
@@ -75,12 +75,6 @@ export default class FormCreateRender {
 }
 
 
-
-
-
-
-const propsName = ['class', 'style', 'attrs', 'props', 'domProps', 'on', 'nativeOn', 'directives', 'scopedSlots', 'slot', 'ref', 'key'];
-
 /**
  * 渲染到组件的参数
  * 
@@ -88,6 +82,11 @@ const propsName = ['class', 'style', 'attrs', 'props', 'domProps', 'on', 'native
  */
 function getProps(rule) {
     const props = {};
+    let propsName = [
+        //model实现组件的双向绑定 
+        'model',
+        ...propsNames
+    ]
     propsName.forEach(name => {
         if (rule[name] !== undefined)
             props[name] = rule[name];

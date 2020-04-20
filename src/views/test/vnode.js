@@ -15,7 +15,7 @@ export default {
     return _c(
       "div",
       [
-        _c("input", {
+        _c("el-input", {
           attrs: {
             type: "text",
             value: _vm.row.name
@@ -37,8 +37,8 @@ export default {
           },
           on: {
             input: function (e) {
-              console.log(e)
-              _vm.row.name = e.target.value
+              // console.log(e)
+              // _vm.row.name = e.target.value
             }
           }
         }),

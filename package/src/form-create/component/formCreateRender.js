@@ -23,7 +23,8 @@ export default class FormCreateRender {
     render() {
         let h = this.vm.$createElement;
         let rule = this.vm.rulesParseData;
-        
+        console.log('渲染规则',rule)
+
         //@ts-ignore
         if (isType(rule, 'Function')) {
             rule = (rule).call(this.vm);
@@ -65,7 +66,6 @@ export default class FormCreateRender {
         if (!rule.vm) rule.vm = new Vue();
 
         setTemplateProps(rule);
-
         //@ts-ignore 编译为vnode
         const vn = compileToFunctions(rule.template).render.call(rule.vm);
 

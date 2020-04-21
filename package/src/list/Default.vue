@@ -72,7 +72,7 @@ import FilterRow from "./FilterRow";
 import RulesSetting from "./../RulesSetting";
 const rulesConfig = RulesSetting.getRules();
 
-import { ListDefualtMixin } from "./../mixins/ListMixin";
+import { ListDefualtMixin } from "./../../mixins/ListMixin";
 
 export default {
   name: "list-default",

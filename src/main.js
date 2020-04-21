@@ -19,9 +19,11 @@ Vue.config.productionTip = false
 import muloAdmin from '../package/index.js'
 Vue.use(muloAdmin);
 
-import formCrate from '../package/form-create/index'
+import formCrate from '../package/src/form-create/index'
 Vue.use(formCrate);
   
+import CheckBoxGroup1 from '../package/components/checkbox-group/CheckBoxGroup.vue'
+Vue.component('mulo-checkbox-group',CheckBoxGroup1)
   
 console.log(muloAdmin)
 

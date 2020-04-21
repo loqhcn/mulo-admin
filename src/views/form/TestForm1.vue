@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import sort from "./../../../package/list/Sort";
+import sort from "./../../../package/src/list/Sort";
 export default {
   components: {
     sort

@@ -108,10 +108,10 @@ import {
   TimePicker,
   Checkbox
 } from "element-ui";
-import MuloCheckBoxGroup from "./../checkbox-group/CheckBoxGroup.vue";
+import MuloCheckBoxGroup from "./../../components/checkbox-group/CheckBoxGroup.vue";
 import NumberRange from "./filters/NumberRange";
 
-import { getType } from "./../utils/util";
+import { getType } from "./../../utils/util";
 
 console.log(MuloCheckBoxGroup);
 export default {

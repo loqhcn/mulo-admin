@@ -1,7 +1,7 @@
 
 import {
     getType
-} from './../../utils/util'
+} from './../../../utils/util'
 
 import { builtIn } from './../ui/element/rule'
 
@@ -47,22 +47,23 @@ export default class RuleParse {
      * @return 完整功能配置
      */
     parse(rules) {
+        console.log('编译组件',rules);
+        
         let $rules = [];
         rules.forEach((li, index) => {
+            
             $rules.push(
-                this.getFormField(li)
+                this.getFormField(  li.__ismaker ? li.toJson() : li )
             )
         });
 
         //底部按钮
-
         let footer = this.footerRule()
-
         $rules.push(footer)
-
 
         //表单
         let form = this.buildForm($rules)
+        // this.vm._refresh()
         return form
     }
 
@@ -77,7 +78,8 @@ export default class RuleParse {
      * @return FieldRule el-form-item
      */
     getFormField(rule) {
-        console.log('getform', rule);
+        
+        // console.log('getform', rule);
         //输入规则示例
         let demoRule = {
             type: "input",
@@ -95,7 +97,7 @@ export default class RuleParse {
             },
             //验证参数
             validate: [
-                { required: true, message: "请输入goods_name", trigger: "blur" }
+                { required: true, message: "请输入goods_name", trigger: "blur"}
             ],
             //类名
             className: 'mulo',
@@ -103,15 +105,14 @@ export default class RuleParse {
             fieldSetting: {
 
             },
-
         }
         let _this = this;
         //规则
         let li = rule;
         let $on = this.getActions(li.on);
+        let $fieldName = li.field || 'name';
 
-        console.log(_this.vm.value[li.field]);
-
+        // console.log(_this.vm.value[li.field]);
 
         let $field = {
             type: li.type,
@@ -133,18 +134,21 @@ export default class RuleParse {
             key: li.key,
             ref: li.ref,
             refInFor: li.refInFor,
+            // 双向绑定
             model: {
-                value: _this.vm.value[li.field],
-                callback: function ($$v) {
-                    console.log('modal callback')
-                    _vm.$set(_this.vm.value, li.field , $$v)
+                value: this.vm.value[ $fieldName ],
+                callback:  ($$v)=>{
+                    console.log('model callback',$fieldName,this.vm)
+
+                    this.vm._refresh();
+                    this.vm.$set(this.vm.value, $fieldName , $$v)
                 },
             },
             on: {
                 //设置的其它事件不做中间处理
                 ...$on,
                 input(e) {
-                    // console.log('getFormField - on input', e);
+                    console.log('getFormField - on input', e);
                     // _this.vm.value[li.field] = e;
                     // //触发原本事件
                     // li.on && li.on.input && li.on.input(e);

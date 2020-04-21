@@ -44,6 +44,13 @@ const fieldRule = {
     'title': {
         default: ""
     },
+
+    'options':{
+        type:Array,
+        default:()=>{
+            return [];
+        }
+    }
 };
 
 //字段名列表

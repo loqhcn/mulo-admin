@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import selectRows from "./../../../package/list/SelectRows";
+import selectRows from "./../../../package/src/list/SelectRows";
 export default {
   // 参数
   components: {

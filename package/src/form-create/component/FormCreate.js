@@ -35,22 +35,26 @@ export default {
                 return this.parseRule(this.rules)
             },
             renderTag: 1,
+            //刷新渲染组件渲染的条件
+            unique:0,
         };
     },
 
     watch: {
         value: {
             handler(newValue, oldValue) {
+                console.log('watch value' , newValue)
                 // if (this.paramsUpdateReload) {
                 //     this.getList(true);
                 // }
-                this.$emit('input', newValue)
+                // this.$emit('input', newValue)
             },
             deep: true
         },
         rules() {
-            this.rulesParseData = this.parseRule(this.rules)
-        }
+            // this.rulesParseData = this.parseRule(this.rules)
+        },
+        
 
     },
     /**
@@ -59,14 +63,14 @@ export default {
      */
     render() {
         let _this = this;
+        
         return (new FormCreateRender(this)).render();
-
-        // 渲染表单
-
-        //
-
     },
     methods: {
+        //通过变量刷新组件
+        _refresh() {
+            ++this.unique;
+        },
 
         /**
          * 
@@ -80,36 +84,8 @@ export default {
         parseRule(rules) {
             let obj = new RuleParse(this);
             let data = obj.parse(this.rules);
-            console.log(data)
             return data
         },
-
-
-        /**
-         * 
-         * 
-         */
-        parseChilren() {
-
-        },
-        /**
-         * 通过的rules生成的组件的事件, 通过复写事件的方式实现插入 v-model功能
-         * 
-         * @param {*} on 
-         */
-        getActions(on) {
-            let $on = {
-
-            }
-            if (on) {
-                for (let x in on) {
-                    if (x != 'input' && x != 'change') {
-                        $on[x] = on[x]
-                    }
-                }
-            }
-            return $on;
-        }
 
 
     },

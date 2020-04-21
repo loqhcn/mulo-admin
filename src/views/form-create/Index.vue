@@ -19,44 +19,45 @@
 </template>
 
 <script>
-import jsonToVue from "./../../../package/form-create/jsonToVue/index";
+import jsonToVue from "./../../../package/src/form-create/jsonToVue/index";
 import jsonvue from "json2vue";
 
-import CheckBoxGroup from "./../../../package/checkbox-group/CheckBoxGroup";
-
 // 规则编译
-import RuleParse from "./../../../package/form-create/core/RuleParse";
-import maker from "./../../../package/form-create/factory/maker";
+import RuleParse from "./../../../package/src/form-create/core/RuleParse";
+import maker from "./../../../package/src/form-create/factory/maker";
 
 // maker构建器
 
 export default {
-  components: {
-    [CheckBoxGroup.name]: CheckBoxGroup
-  },
+  components: {},
   data() {
     return {
       row: {
         name: "罗戚洪",
-        name2: "mulo"
+        name2: "mulo",
+        is_postage: 0
       },
       rules: [
-        {
-          type: "el-input",
-          title: "商品名称",
-          field: "name",
-          value: "iphone 7",
-          col: {
-            span: 12,
-            labelWidth: 150
-          },
-          props: {
-            type: "text"
-          },
-          validate: [
-            { required: true, message: "请输入goods_name", trigger: "blur" }
-          ]
-        }
+        maker.input("名称", "name", 122),
+        maker.type("input"),
+        maker.checkbox("是否包邮", "is_postage", "0").options([
+          { value: "0", label: "不包邮", disabled: false },
+          { value: "1", label: "包邮", disabled: false },
+          { value: "2", label: "未知", disabled: true }
+        ]),
+        maker.switch("是否上架", "is_show", "1").props({
+          activeValue: "1",
+          inactiveValue: "0"
+        }),
+        maker.slider("滑块", "slider", [0, 52]).props({
+          min: 0,
+          max: 100,
+          range: true
+        }),
+        maker.number('排序','sort',0),
+        
+
+
       ]
     };
   },
@@ -70,15 +71,13 @@ export default {
       let rule = obj.parse(this.rules);
       console.log("编译后规则", rule);
     },
-    getRule(){
-      return [
-        maker.input('')
-      ]
+    getRule() {
+      return [maker.input("")];
     },
 
     makerTest() {
       let Datamaker = maker
-        .input("input","input",123)
+        .input("input", "input", 123)
         .props({
           name: "罗戚洪",
           value: "罗戚洪"
@@ -88,39 +87,32 @@ export default {
     },
 
     pushBtn() {
-      this.rules.push({
-        type: "ElInput",
-        ref: "btn",
-        props: {
-          disabled: false
-        },
-        children: ["按钮"]
-      });
+      this.rules.push(maker.input("name2", "name2", 122).toJson());
     },
     testClick() {
       console.log("test click");
     }
   },
   created() {
-    function mock() {
-      return {
-        rule: [
-          {
-            type: "ElButton",
-            ref: "btn",
-            props: {
-              disabled: true
-            },
-            children: ["test"]
-          }
-        ],
-        mounted() {
-          console.log(this);
-        }
-      };
-    }
-    var jv = new jsonvue(mock());
-    console.log(jv);
+    // function mock() {
+    //   return {
+    //     rule: [
+    //       {
+    //         type: "ElButton",
+    //         ref: "btn",
+    //         props: {
+    //           disabled: true
+    //         },
+    //         children: ["test"]
+    //       }
+    //     ],
+    //     mounted() {
+    //       console.log(this);
+    //     }
+    //   };
+    // }
+    // var jv = new jsonvue(mock());
+    // console.log(jv);
     // var vm = jv.mount('#app');
   }
 };

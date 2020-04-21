@@ -1,8 +1,8 @@
-import ListDefault from './list/Default.vue'
-import FormDefault from './form/Default.vue'
-import FormRow from './form/Row.vue'
-import SelectRows from './list/SelectRows.vue'
-import ListSort from './list/Sort.vue'
+import ListDefault from './src/list/Default.vue'
+import FormDefault from './src/form/Default.vue'
+import FormRow from './src/form/Row.vue'
+import SelectRows from './src/list/SelectRows.vue'
+import ListSort from './src/list/Sort.vue'
 
 
 //axios
@@ -28,8 +28,7 @@ const install = function (Vue) {
     regComponent(Vue, FormRow);
     regComponent(Vue, SelectRows);
     regComponent(Vue, ListSort);
-
-
+    
     Vue.prototype.$loading = Loading.service;
     Vue.prototype.$msgbox = MessageBox;
     Vue.prototype.$alert = MessageBox.alert;

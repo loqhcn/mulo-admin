@@ -40,7 +40,7 @@
 
 <script>
 import ListDefault from "./Default";
-import { ListDefualtMixin } from "./../mixins/ListMixin";
+import { ListDefualtMixin } from "./../../mixins/ListMixin";
 
 export default {
   name: "select-rows",

@@ -239,7 +239,10 @@ export default class RuleParse {
                     ],
                     on: {
                         click: () => {
-                            console.log('submit')
+                            console.log('submit',this.vm)
+                            this.vm.$emit('submit',{
+                                row:this.vm.value
+                            })
                         }
                     }
                 },

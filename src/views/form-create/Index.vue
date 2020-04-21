@@ -1,6 +1,8 @@
 <template>
   <div>
-    <form-create v-model="row" :rules="rules"></form-create>
+    <form-create v-model="row" :rules="rules"
+      @submit="submit"
+      ></form-create>
 
     <!-- <mulo-form-default>
       <mulo-form-row title="字段名"></mulo-form-row>
@@ -54,14 +56,18 @@ export default {
           max: 100,
           range: true
         }),
-        maker.number('排序','sort',0),
-        
-
-
+        maker.number("排序", "sort", 0)
       ]
     };
   },
   methods: {
+    /**
+     * 
+     * 
+     */
+    submit(data){
+      console.log('submit',data)
+    },
     /**
      *
      */
@@ -94,6 +100,7 @@ export default {
     }
   },
   created() {
+    
     // function mock() {
     //   return {
     //     rule: [

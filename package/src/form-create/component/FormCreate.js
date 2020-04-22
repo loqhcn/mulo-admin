@@ -1,4 +1,4 @@
-import FormCreateRender from './formCreateRender'
+import VueJsonRender from './../core/VueJsonRender.js'
 
 import RuleParse from './../core/RuleParse'
 
@@ -64,7 +64,7 @@ export default {
     render() {
         let _this = this;
         
-        return (new FormCreateRender(this)).render();
+        return (new VueJsonRender(this)).render();
     },
     methods: {
         //通过变量刷新组件

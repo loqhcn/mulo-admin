@@ -1,8 +1,8 @@
 import Vue from 'vue'
 
 import { compile, compileToFunctions, ssrCompileToFunctions } from 'vue-template-compiler'
-import { isString, isType } from "./../util";
-import { propsNames } from './../core/rule'
+import { isString, isType } from "../util";
+import { propsNames } from './rule'
 
 /**
  * @todo 解析rules参数 , 生成组件的模板

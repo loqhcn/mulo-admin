@@ -23,12 +23,16 @@ export default class FormCreateRender {
     render() {
         let h = this.vm.$createElement;
         let rule = this.vm.rulesParseData;
-        console.log('渲染规则',rule)
 
         //@ts-ignore
         if (isType(rule, 'Function')) {
             rule = (rule).call(this.vm);
         }
+        if(!rule){
+            rule = []
+        }
+        console.log('渲染规则',rule)
+
 
         let data = Array.isArray(rule) ? this.vm.$createElement('div', {}, rule.map(rule => {
             return this.renderRule(rule);
@@ -37,8 +41,7 @@ export default class FormCreateRender {
         // 渲染组件规则
         return data
     }
-
-
+    
     /**
      * 渲染所有子级
      * @logic 遍历children生成整个vnode

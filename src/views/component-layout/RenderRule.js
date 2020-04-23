@@ -1,9 +1,19 @@
 //编译vuejson
 import VueJsonRender from './../../../package/src/form-create/core/VueJsonRender'
+import { isType } from './../../../package/utils/util'
+
 import RuleParse from './core/RuleParse'
+import ComponentContainer from './ComponentContainer'
+
+let ruleParse = false;
+
 export default {
+    components: {
+        'cl-container': ComponentContainer
+    },
     name: 'render-rule',
     props: {
+        // model rules
         value: {
             type: Array,
             default: () => {
@@ -21,9 +31,15 @@ export default {
         }
 
     },
+    created() {
+        ruleParse = new RuleParse(this);
+    },
     data() {
         return {
-            flush: 0,
+            unique: 0,
+
+            //创建之前
+            ruleParse: false,
 
             //规则数据
             rulesParseData: () => {
@@ -32,22 +48,18 @@ export default {
 
         }
     },
+
     methods: {
-        name() {
+        //通过变量刷新组件
+        _refresh(rules) {
+            this.$forceUpdate();
+            this.$emit('input', rules);
 
         },
-        flushDo(rules) {
 
-            
-
-            this.$set(this.$data, 'flush', this.flush + 1)
-
-        },
         parse() {
-            
-            let obj = new RuleParse(this);
 
-            return obj.parse(this.value);
+            return ruleParse.parse(this.value);
 
         }
     },

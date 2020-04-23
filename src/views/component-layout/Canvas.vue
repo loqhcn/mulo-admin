@@ -1,8 +1,7 @@
 
 <template>
   <div class="canvas" draggable="false" @drop="drop" @dragover="allowDrop">
-    <div>sdfasdf</div>
-    <render-rule v-model="rules"></render-rule>
+    <render-rule @change="change" v-model="rules"></render-rule>
   </div>
 </template>
 
@@ -25,6 +24,9 @@ export default {
     };
   },
   methods: {
+    change(e) {
+      console.log("change", e);
+    },
     // 拖动的组件落下
     drop(ev) {
       ev.preventDefault();
@@ -44,7 +46,8 @@ export default {
     allowDrop(ev) {
       //   console.log(ev);
       ev.preventDefault();
-    }
+    },
+    
   }
 };
 </script>

@@ -22,6 +22,8 @@ const router = new VueRouter({
     { path: '/test-form-1', component: () => import('./views/form/TestForm1.vue') },
     { path: '/test-select-row', component: () => import('./views/table/TestSelectRow.vue') },
     { path: '/form-create/index', component: () => import('./views//form-create/Index.vue') },
+    { path: '/form-create/edit-test', component: () => import('./views//form-create/EditTest.vue') },
+
 
 
     // 组件布局

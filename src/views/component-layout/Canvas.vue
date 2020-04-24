@@ -1,7 +1,7 @@
 
 <template>
   <div class="canvas" draggable="false" @drop="drop" @dragover="allowDrop">
-    <render-rule @change="change" v-model="rules"></render-rule>
+    <render-rule @change="change" @select-component="selectComponent" v-model="rules"></render-rule>
   </div>
 </template>
 
@@ -15,15 +15,14 @@ export default {
   data() {
     return {
       rules: [
-        {
-          type: "ElButton",
-          ref: "btn",
-          children: ["test"]
-        }
+        
       ]
     };
   },
   methods: {
+    selectComponent(){
+      
+    },
     change(e) {
       console.log("change", e);
     },

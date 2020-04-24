@@ -1,7 +1,7 @@
 <template>
   <div class="mulo-cl-container" :class="{
     active:active
-  }" @click="onClick">
+  }" @click.stop="onClick">
     <slot>容器</slot>
   </div>
 </template>
@@ -27,6 +27,17 @@ export default {
     },
     vm: {
       default: false
+    },
+    id: {
+      type: Number
+      // required: true
+    },
+
+    //拖动组件的规则
+    componentRule: {
+      default: () => {
+        return {};
+      }
     }
   },
   data() {
@@ -36,10 +47,13 @@ export default {
     /**
      * 选中, 属性栏页更新
      *
+     *
      */
     onClick() {
-      console.log(this.$element);
+      console.log(this.id, this.$element);
       //   console.log("click");
+      this.vm.selectComponent(this.id);
+
       this.$emit("active");
     }
   }
@@ -48,12 +62,9 @@ export default {
 
 <style lang="scss" >
 .mulo-cl-container {
-  display: unset;
+  line-height: 1;
   &.active {
     border: 1px solid red;
-  }
-  &>*{
-      display: block;
   }
 }
 </style>

@@ -9,6 +9,7 @@
           <h3>设计器</h3>
         </div>
         <div class="right">
+          <el-button @click="showJson">打印JSON规则</el-button>
           <el-button @click="clear">清除</el-button>
           <el-button @click="preview">预览</el-button>
         </div>
@@ -39,6 +40,7 @@
         <div class="body">
           <cl-canvas ref="cl_canvas"></cl-canvas>
         </div>
+
         <div class="right">
           <!-- 右侧导航 -->
           <div class="panel-menu flex space-between">
@@ -52,7 +54,15 @@
           </div>
           <div class="panel-body">
             <!-- 组件属性 -->
-            <div v-if="tabRightActive==0" class="item"></div>
+            <div v-if="tabRightActive==0" class="item" style="padding:5px;">
+              <form-create
+                v-model="attributeData"
+                :rules="attributeRules"
+                :footer-setting="{
+                  visible:false,
+                }"
+              ></form-create>
+            </div>
 
             <!-- 设置 -->
             <div v-if="tabRightActive==1" class="item">
@@ -111,6 +121,13 @@ export default {
       components: DefaultUi,
 
       /**
+       * 属性编辑数据渲染
+       *
+       */
+      attributeData: {},
+      attributeRules: [],
+
+      /**
        * 编辑区全局设置
        *
        */
@@ -128,11 +145,8 @@ export default {
       //vuejson 整个编辑规则
       rules: [],
 
-      tabRight: ["属性", "设置", "结构"],
-      tabRightActive: 0,
-      
-      //当前选中组件
-      activeId:0,
+      tabRight: ["属性", "设置", "结构", "样式"],
+      tabRightActive: 0
     };
   },
   methods: {
@@ -162,7 +176,13 @@ export default {
       this.$nextTick(() => {
         this.rules = this.$refs.cl_canvas.rules;
         this.previewVisible = true;
+        
+        
+
       });
+    },
+    showJson() {
+      console.log(this.$refs.cl_canvas.rules);
     }
   }
 };
@@ -237,7 +257,8 @@ export default {
   }
 
   .right {
-    min-width: 150px;
+    width: 200px;
+    overflow-x: hidden;
     border-left: 1px solid #000;
     // 菜单
     .panel-menu {
@@ -274,6 +295,7 @@ export default {
   background-color: rgba(255, 255, 255, 1);
 
   .body {
+    
   }
 }
 </style>

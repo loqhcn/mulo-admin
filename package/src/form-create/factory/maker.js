@@ -21,12 +21,12 @@ class Maker {
     }
 
     // 绑定默认值
-    value( value ){
+    value(value) {
         console.log(value)
-        this.rules.attrs = Object.assign( {
+        this.rules.attrs = Object.assign({
             value: value
-        },( this.rules.attrs || {} ))
-        
+        }, (this.rules.attrs || {}))
+
 
         return this;
     }
@@ -51,6 +51,17 @@ class Maker {
             type: this.type,
             ...values
         }
+    }
+
+    /**
+     * 注册验证完成后的事件
+     * 
+     * @param {*} callback 
+     */
+    regValidateAfter(callback) {
+        // this.rules.on = 
+
+        return this;
     }
 
 }
@@ -83,7 +94,7 @@ class MakerCall {
         return obj;
     }
 
-  
+
 }
 
 /**
@@ -106,7 +117,7 @@ for (let x in builtIn) {
      * @return {Maker}
      */
     MakerCall.prototype[label] = function (title, field, value) {
-        console.log(title,field,value)
+        console.log(title, field, value)
         return new Maker(uiLabel).title(title).field(field).value(value);
     }
 }

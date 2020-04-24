@@ -14,12 +14,22 @@ export default {
                 }
             },
         },
+        //
         rules: {
             type: Array,
             default: () => {
                 return []
             }
         },
+        //底部设置
+        footerSetting: {
+            type: Object,
+            default: () => {
+                return {
+                    visible: true
+                }
+            }
+        }
 
 
     },
@@ -36,14 +46,14 @@ export default {
             },
             renderTag: 1,
             //刷新渲染组件渲染的条件
-            unique:0,
+            unique: 0,
         };
     },
 
     watch: {
         value: {
             handler(newValue, oldValue) {
-                console.log('watch value' , newValue)
+                console.log('watch value', newValue)
                 // if (this.paramsUpdateReload) {
                 //     this.getList(true);
                 // }
@@ -54,7 +64,7 @@ export default {
         rules() {
             // this.rulesParseData = this.parseRule(this.rules)
         },
-        
+
 
     },
     /**
@@ -63,7 +73,7 @@ export default {
      */
     render() {
         let _this = this;
-        
+
         return (new VueJsonRender(this)).render();
     },
     methods: {

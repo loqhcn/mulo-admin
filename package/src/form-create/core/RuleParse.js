@@ -4,6 +4,7 @@ import {
 } from './../../../utils/util'
 
 import { builtIn } from './../ui/element/rule'
+import maker from '../factory/maker';
 
 /**
  * 表单配置规则生成为 jsonvue的规则(由jsonvue转换为vnode后呈现)
@@ -29,8 +30,8 @@ export default class RuleParse {
         this.formRow = {
             type: 'el-form-item'
         }
-
-        // 操作配置
+        
+        this.footerSetting = this.vm.footerSetting || {}; 
 
     }
 
@@ -47,13 +48,13 @@ export default class RuleParse {
      * @return 完整功能配置
      */
     parse(rules) {
-        console.log('编译组件',rules);
-        
+        console.log('编译组件', rules);
+
         let $rules = [];
         rules.forEach((li, index) => {
-            
+
             $rules.push(
-                this.getFormField(  li.__ismaker ? li.toJson() : li )
+                this.getFormField(li.__ismaker ? li.toJson() : li)
             )
         });
 
@@ -78,7 +79,7 @@ export default class RuleParse {
      * @return FieldRule el-form-item
      */
     getFormField(rule) {
-        
+
         // console.log('getform', rule);
         //输入规则示例
         let demoRule = {
@@ -97,7 +98,7 @@ export default class RuleParse {
             },
             //验证参数
             validate: [
-                { required: true, message: "请输入goods_name", trigger: "blur"}
+                { required: true, message: "请输入goods_name", trigger: "blur" }
             ],
             //类名
             className: 'mulo',
@@ -136,27 +137,41 @@ export default class RuleParse {
             refInFor: li.refInFor,
             // 双向绑定
             model: {
-                value: this.vm.value[ $fieldName ],
-                callback:  ($$v)=>{
-                    console.log('model callback',$fieldName,this.vm)
+                value: this.vm.value[$fieldName],
+                callback: ($$v) => {
+                    console.log('model callback', $fieldName, this.vm)
 
                     this.vm._refresh();
-                    this.vm.$set(this.vm.value, $fieldName , $$v)
+                    this.vm.$set(this.vm.value, $fieldName, $$v)
                 },
+            },
+            domProps: {
+                value: this.vm.value[$fieldName]
             },
             on: {
                 //设置的其它事件不做中间处理
                 ...$on,
-                input(e) {
+                input: (e) => {
                     console.log('getFormField - on input', e);
-                    // _this.vm.value[li.field] = e;
-                    // //触发原本事件
-                    // li.on && li.on.input && li.on.input(e);
+                    let type = getType(e)
+                    if (type == 'inputEvent') {
+                        _this.vm.$set(this.vm.value, $fieldName, e.target.value)
+                    }
+
+                    
+                    
+                    // 
+
+                    //触发原本事件
+                    li.on && li.on.input && li.on.input(e);
+
                     // //事件冒泡阻止
                     // event.stopPropagation()
-
                 },
                 change(e) {
+
+
+
                     // //触发原本事件
                     // li.on && li.on.change && li.on.change(e);
                     // //事件冒泡阻止
@@ -180,7 +195,7 @@ export default class RuleParse {
                 $field
             ]
         }
-        console.log('字段规则',$field);
+        // console.log('字段规则', $field);
         return $rule;
     }
 
@@ -202,7 +217,7 @@ export default class RuleParse {
         // 表单底部按钮生成
         let form = {
             type: this.formContainer.type,
-            ref: "btn0",
+            ref: "mulo_form",
             class: "mulo-form",
             props: {
 
@@ -211,6 +226,10 @@ export default class RuleParse {
                 // 表单主体
                 {
                     type: this.formBody.type,
+                    ref: 'form',
+                    on: {
+
+                    },
                     children: [
                         ...fields
                     ]
@@ -227,6 +246,12 @@ export default class RuleParse {
      * @return {Rule} 底部按钮规则json
      */
     footerRule() {
+        //关闭底部
+        if(this.footerSetting.visible===false){
+            return [];
+        }
+
+        
         let { type } = this.formRow;
         //默认格式
         let rule = {
@@ -239,9 +264,9 @@ export default class RuleParse {
                     ],
                     on: {
                         click: () => {
-                            console.log('submit',this.vm)
-                            this.vm.$emit('submit',{
-                                row:this.vm.value
+                            console.log('submit', this.vm)
+                            this.vm.$emit('submit', {
+                                row: this.vm.value
                             })
                         }
                     }

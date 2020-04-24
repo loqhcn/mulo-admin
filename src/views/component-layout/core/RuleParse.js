@@ -8,6 +8,7 @@
  * 
  */
 
+import defaultUi from './../ui/default'
 
 export default class RuleParse {
 
@@ -18,13 +19,57 @@ export default class RuleParse {
     constructor(vm) {
         // 操作控制容器
         this.contaier = {
-            type: 'cl-container'
+            type: 'cl-container',
+            extendStyle: [
+                'display',
+            ]
         }
+
 
         this.vm = vm;
 
         //id分配计数器
         this.idCount = 0;
+        //建立id和rule的对照关系
+        this.idsMap = {
+
+        }
+
+        //组件关系 , 缺陷: 目前只索引了default, 计划后期实现更多ui库和自定义库载入
+        this.componentsList = {}
+        let uis = [
+            defaultUi
+        ]
+        uis.forEach((ui) => {
+            ui.forEach((cate) => {
+                cate.children.forEach((component) => {
+                    this.componentsList[component.id] = component;
+                })
+            })
+        })
+
+
+
+    }
+
+    /**
+     * 分配一个组件id
+     * 
+     */
+    nextId() {
+        return this.idCount++;
+
+    }
+
+    getContainerStyle(style) {
+        let $style = {};
+        for (let x in this.contaier.extendStyle) {
+            let key = this.contaier.extendStyle[x];
+            if (style && style[key] != undefined) {
+                $style[key] = style[key]
+            }
+        }
+        return $style;
     }
 
 
@@ -67,13 +112,12 @@ export default class RuleParse {
 
 
             let element = rules[x]
+            //普通文字
             if (typeof element == 'string') {
                 continue;
             }
 
             let $element = $rules[x];
-
-
 
             //dom渲染
             element = Object.assign(element, {
@@ -103,6 +147,7 @@ export default class RuleParse {
 
                 }
 
+
             })
 
 
@@ -114,14 +159,29 @@ export default class RuleParse {
                 element.children = this.parseContainer(element.children, $element.children, ++level);
             }
 
-            //操作控制容器
+            // # 容器
 
+            // ## 实现外面加一层div不影响定位
+
+            // 容器继承的style
+
+
+            //加入到层级
+            $rules[x].operation = $rules[x].operation || {};
+            //分配id
+            $rules[x].operation.id = $rules[x].operation.id || this.nextId()
+            if (this.idsMap[$rules[x].operation.id] == undefined) {
+                this.idsMap[$rules[x].operation.id] = $element
+            }
             rules[x] = {
                 type: this.contaier.type,
+                style: this.getContainerStyle(element.style || {}),
                 props: {
+                    id: $rules[x].operation.id,
                     vm: this.vm,
                     $element: $element,
-                    active: $rules[x].operation,
+                    active: $rules[x].operation.id == this.vm.activeId,
+                    componentRule: this.componentsList[$element.id]
                 },
                 children: [
                     element

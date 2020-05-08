@@ -31,6 +31,20 @@ class Maker {
         return this;
     }
 
+    
+    /**
+     * 多列组件数据配置
+     * @like radio checkbox select
+     * 
+     * 
+     */
+    options(options) {
+        this.rules.props = Object.assign({
+            options: options
+        }, (this.rules.options || {}))
+        return this;
+    }
+    
 
     /**
      * 生成最终生成表单的json
@@ -53,13 +67,13 @@ class Maker {
         }
     }
 
+
     /**
      * 注册验证完成后的事件
      * 
      * @param {*} callback 
      */
     regValidateAfter(callback) {
-        // this.rules.on = 
 
         return this;
     }
@@ -88,11 +102,12 @@ actionNames.forEach((name) => {
  */
 class MakerCall {
 
-    type(type) {
-        let obj = new Maker(type)
+    type(type, title, field, value) {
+        let obj = new Maker(type).title(title).field(field).value(value)
         console.log(obj)
         return obj;
     }
+
 
 
 }
@@ -118,6 +133,7 @@ for (let x in builtIn) {
      */
     MakerCall.prototype[label] = function (title, field, value) {
         console.log(title, field, value)
+
         return new Maker(uiLabel).title(title).field(field).value(value);
     }
 }

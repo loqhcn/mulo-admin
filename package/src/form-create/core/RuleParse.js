@@ -5,6 +5,8 @@ import {
 
 import { builtIn } from './../ui/element/rule'
 import maker from '../factory/maker';
+// Load the full build.
+import _ from 'lodash'
 
 /**
  * 表单配置规则生成为 jsonvue的规则(由jsonvue转换为vnode后呈现)
@@ -23,15 +25,22 @@ export default class RuleParse {
         }
 
         this.formBody = {
-            type: 'el-form'
+            type: 'el-form',
+            props: {
+                size: 'mini'
+            },
         }
 
-
+        
         this.formRow = {
             type: 'el-form-item'
         }
-        
-        this.footerSetting = this.vm.footerSetting || {}; 
+
+        this.footerSetting = this.vm.footerSetting || {};
+
+        //每次编译时保存验证的规则
+        this.validateRules = {};
+
 
     }
 
@@ -50,21 +59,23 @@ export default class RuleParse {
     parse(rules) {
         console.log('编译组件', rules);
 
+        this.validateRules = [];
+
+        //@TODO 规则编译
         let $rules = [];
         rules.forEach((li, index) => {
-
             $rules.push(
                 this.getFormField(li.__ismaker ? li.toJson() : li)
             )
         });
 
-        //底部按钮
+        //@TODO 底部按钮
         let footer = this.footerRule()
         $rules.push(footer)
 
-        //表单
+        //@TODO 表单主体
         let form = this.buildForm($rules)
-        // this.vm._refresh()
+
         return form
     }
 
@@ -77,6 +88,7 @@ export default class RuleParse {
      * @param {FormCreateRule} 目前仅支持单个字段 
      * 
      * @return FieldRule el-form-item
+     * 
      */
     getFormField(rule) {
 
@@ -107,6 +119,7 @@ export default class RuleParse {
 
             },
         }
+
         let _this = this;
         //规则
         let li = rule;
@@ -139,7 +152,6 @@ export default class RuleParse {
             model: {
                 value: this.vm.value[$fieldName],
                 callback: ($$v) => {
-                    console.log('model callback', $fieldName, this.vm)
 
                     this.vm._refresh();
                     this.vm.$set(this.vm.value, $fieldName, $$v)
@@ -158,8 +170,8 @@ export default class RuleParse {
                         _this.vm.$set(this.vm.value, $fieldName, e.target.value)
                     }
 
-                    
-                    
+
+
                     // 
 
                     //触发原本事件
@@ -169,11 +181,9 @@ export default class RuleParse {
                     // event.stopPropagation()
                 },
                 change(e) {
+                    //触发原本事件
+                    li.on && li.on.change && li.on.change(e);
 
-
-
-                    // //触发原本事件
-                    // li.on && li.on.change && li.on.change(e);
                     // //事件冒泡阻止
                     // event.stopPropagation()
                 }
@@ -184,17 +194,24 @@ export default class RuleParse {
 
         }
 
-        //表单字段
+        //表单字段列
         let $rule = {
             type: this.formRow.type,
             props: {
                 label: rule.title || 'field',
+                prop: $fieldName,
             },
             children: [
                 // 表单列
                 $field
             ]
         }
+
+        //验证规则
+        if (li.validate) {
+            this.validateRules[$fieldName] = li.validate;
+        }
+
         // console.log('字段规则', $field);
         return $rule;
     }
@@ -224,18 +241,26 @@ export default class RuleParse {
             },
             children: [
                 // 表单主体
-                {
-                    type: this.formBody.type,
+                Object.assign({
                     ref: 'form',
+                    props: {
+                        model: this.vm.value
+                    },
                     on: {
+                        change: () => {
 
+                        }
                     },
                     children: [
                         ...fields
                     ]
-                }
+                }, {
+                    ...this.formBody
+                })
+
             ]
         }
+        console.log(form)
         return form;
     }
 
@@ -247,11 +272,11 @@ export default class RuleParse {
      */
     footerRule() {
         //关闭底部
-        if(this.footerSetting.visible===false){
+        if (this.footerSetting.visible === false) {
             return [];
         }
 
-        
+
         let { type } = this.formRow;
         //默认格式
         let rule = {
@@ -264,10 +289,21 @@ export default class RuleParse {
                     ],
                     on: {
                         click: () => {
-                            console.log('submit', this.vm)
-                            this.vm.$emit('submit', {
-                                row: this.vm.value
-                            })
+
+                            //验证 
+                            this.vm.$refs['form'].validate((valid) => {
+                                if (valid) {
+                                    this.vm.$emit('submit', {
+                                        row: this.vm.value
+                                    })
+                                } else {
+                                    console.log('error submit!!');
+                                    return false;
+                                }
+                            });
+
+
+
                         }
                     }
                 },
@@ -279,6 +315,17 @@ export default class RuleParse {
                     on: {
                         click: () => {
                             console.log('取消')
+                        }
+                    }
+                },
+                {
+                    type: this.getFieldType('button'),
+                    children: [
+                        "重置"
+                    ],
+                    on: {
+                        click: () => {
+                            console.log('重置')
                         }
                     }
                 }
@@ -294,7 +341,6 @@ export default class RuleParse {
      * @param {*} on 
      */
     getActions(on) {
-
         let $on = {
 
         }

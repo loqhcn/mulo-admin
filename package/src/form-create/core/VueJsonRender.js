@@ -31,7 +31,7 @@ export default class FormCreateRender {
         if(!rule){
             rule = []
         }
-        console.log('渲染规则',rule)
+        // console.log('渲染规则',rule)
 
 
         let data = Array.isArray(rule) ? this.vm.$createElement('div', {}, rule.map(rule => {

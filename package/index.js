@@ -49,7 +49,7 @@ if (typeof window !== 'undefined' && window.Vue) {
     install(window.Vue);
     //全局的ajax
     window.$http = window.Vue.prototype.$http;
-
+    
 }
 
 export default {

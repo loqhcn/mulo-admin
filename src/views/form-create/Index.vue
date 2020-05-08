@@ -1,8 +1,6 @@
 <template>
   <div>
-    <form-create v-model="row" :rules="rules"
-      @submit="submit"
-      ></form-create>
+    <form-create ref="asdf" v-model="row" :rules="rules" @submit="submit"></form-create>
 
     <!-- <mulo-form-default>
       <mulo-form-row title="字段名"></mulo-form-row>
@@ -57,16 +55,18 @@ export default {
           range: true
         }),
         maker.number("排序", "sort", 0)
+
+
       ]
     };
   },
   methods: {
     /**
-     * 
-     * 
+     *
+     *
      */
-    submit(data){
-      console.log('submit',data)
+    submit(data) {
+      console.log("submit", data);
     },
     /**
      *
@@ -100,27 +100,7 @@ export default {
     }
   },
   created() {
-    
-    // function mock() {
-    //   return {
-    //     rule: [
-    //       {
-    //         type: "ElButton",
-    //         ref: "btn",
-    //         props: {
-    //           disabled: true
-    //         },
-    //         children: ["test"]
-    //       }
-    //     ],
-    //     mounted() {
-    //       console.log(this);
-    //     }
-    //   };
-    // }
-    // var jv = new jsonvue(mock());
-    // console.log(jv);
-    // var vm = jv.mount('#app');
+    window.formcrate = this;
   }
 };
 </script>

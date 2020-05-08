@@ -46,7 +46,9 @@ export default {
         is_postage: 0
       },
       rules: [
-        maker.input("名称", "name", 122),
+        maker.input("名称", "name", 122).validate([
+          {require:true}
+        ]),
         maker.type("input", "name"),
         maker.checkbox("是否包邮", "is_postage", "0").options([
           { value: "0", label: "不包邮", disabled: false },

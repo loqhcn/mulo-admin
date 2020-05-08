@@ -5,7 +5,7 @@ import RuleParse from './../core/RuleParse'
 export default {
     name: 'form-create',
     props: {
-        // 生成规则配置
+        // v-model的数据
         value: {
             type: Object,
             default: () => {
@@ -14,7 +14,7 @@ export default {
                 }
             },
         },
-        //
+        //规则
         rules: {
             type: Array,
             default: () => {
@@ -36,11 +36,9 @@ export default {
     data() {
         return {
             rule: this.rules,
-            row: {
-                name: "罗戚洪",
-                name2: "mulo"
-            },
+
             option: [],
+            //组件规则,  目前只能这样获取, 直接设置导致无效
             rulesParseData: () => {
                 return this.parseRule(this.rules)
             },
@@ -49,7 +47,6 @@ export default {
             unique: 0,
         };
     },
-
     watch: {
         value: {
             handler(newValue, oldValue) {
@@ -81,25 +78,15 @@ export default {
         _refresh() {
             ++this.unique;
         },
-
-        /**
-         * 
-         * 
-         * 
-         */
-        handleInputEvent() {
-
-        },
         //编译传入的规则 生成jsonvue规则
         parseRule(rules) {
             let obj = new RuleParse(this);
             let data = obj.parse(this.rules);
             return data
         },
-
+       
 
     },
-
 
 
 

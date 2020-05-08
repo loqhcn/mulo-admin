@@ -43,8 +43,9 @@ export default [
                  */
                 renderAttributeEdit: (element) => {
                     
+                    // 属性编辑组件
                     return [
-                        maker.input('宽', 'width', '100').on({
+                        maker.input('宽', 'style.width', '100px').on({
                             input:(e)=>{
                                 //更新rule
                                 element.style = Object.assign(
@@ -58,24 +59,34 @@ export default [
 
                             }
                         }),
-                        maker.input('高', 'height', '100'),
+                        maker.input('高', 'style.height', '100px'),
+                        
                     ]
-
+                    
                 },
+
+
                 /**
-                 * 渲染元素
+                 * 存储数据和vnode属性的映射关系
+                 * 
+                 * @logic 编辑后渲染 
+                 * - 读取数据, 如props.name
+                 * - 
                  * 
                  */
-                renderAttribute(){
+                renderAttributeRule(){
+
+                    return {
+                        'class':'class',
+                        //按钮文字
+                        'children':'text',
+                        'width':'style.width',
+                           
+                    }
+                    
 
                 },
-                /**
-                 * 获取元素
-                 * 
-                 */
-                getAttribute(){
-
-                }
+                
 
 
 
@@ -131,6 +142,7 @@ export default [
                 children: ["标签一"]
             },
             {
+                id:'default.elementui.el-image',
                 type: "el-image",
                 title: "图片",
 
@@ -146,7 +158,12 @@ export default [
                 attrs: {
 
                 },
-                children: ["标签一"]
+                children: ["标签一"],
+                renderAttributeEdit:(element)=>{
+                   return [
+                        maker.input('图片链接', 'src', '/static/img/1.jpg'),
+                   ]
+                }
             }
         ]
     },

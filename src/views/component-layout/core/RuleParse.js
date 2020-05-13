@@ -123,6 +123,8 @@ export default class RuleParse {
             element = Object.assign(element, {
 
                 on: {
+
+                    //拖动组件落下
                     drop: (e) => {
 
                         var data = JSON.parse(e.dataTransfer.getData("text/plain"));
@@ -142,6 +144,9 @@ export default class RuleParse {
                         //刷新 dom 
                         this.vm._refresh.call(this.vm, this.rules)
 
+                    },
+                    keyup:(e)=>{
+                        console.log(e.keyCode)
                     }
 
 

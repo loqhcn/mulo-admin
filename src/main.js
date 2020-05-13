@@ -21,10 +21,10 @@ Vue.use(muloAdmin);
 
 import formCrate from '../package/src/form-create/index'
 Vue.use(formCrate);
-  
+
 import CheckBoxGroup1 from '../package/components/checkbox-group/CheckBoxGroup.vue'
-Vue.component('mulo-checkbox-group',CheckBoxGroup1)
-  
+Vue.component('mulo-checkbox-group', CheckBoxGroup1)
+
 console.log(muloAdmin)
 
 //eleme
@@ -36,10 +36,23 @@ Vue.use(eleme)
 // import http from './core/http'
 // Vue.prototype.$http = http;
 // window.$http = http;
-   
- 
+
+import SocketIO from "socket.io-client"
+const socket = SocketIO('http://127.0.0.1:3000', {
+  path: "/ws",
+  autoConnect: true
+})
+
+Vue.prototype.$socket = socket;
+socket.on('view', (data) => {
+  console.log('view',data)
+})
+
 new Vue({
   store,
   router,
+  mounted() {
+    
+  },
   render: h => h(App)
 }).$mount('#app')

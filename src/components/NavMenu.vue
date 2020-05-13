@@ -1,6 +1,7 @@
 <template>
     <div>
-        菜单
+        <button>按钮</button>
+        <div>1</div>
         <slot></slot>
     </div>
 </template>

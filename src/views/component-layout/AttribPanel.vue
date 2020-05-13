@@ -20,9 +20,8 @@ export default {
         },
         //可以编辑的项目
         edits:{
-
+          
         }
-
     },
     methods: {
         name() {

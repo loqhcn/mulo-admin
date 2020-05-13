@@ -110,6 +110,19 @@ export default [
                     class: "btn"
                 },
                 children: ["Button"]
+            },
+            {
+                id: 'default.default.input',
+                type: "input",
+                title: "Input",
+                icon: "",
+                style: {
+                  
+                },
+                attrs: {
+                    class: "input"
+                },
+                children: []
             }
         ]
     },

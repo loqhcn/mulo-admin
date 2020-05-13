@@ -22,14 +22,12 @@ export default {
         },
     },
     watch: {
-
-        rules: {
+        value: {
             handler(newdata, olddata) {
-
+                console.log(newdata )
             },
             deep: true
         }
-
     },
     created() {
         ruleParse = new RuleParse(this);
@@ -41,7 +39,7 @@ export default {
             unique: 0,
             //当前选中组件(加边框和操作)
             activeId: 0,
-
+            
             //规则数据
             rulesParseData: () => {
                 return this.parse();

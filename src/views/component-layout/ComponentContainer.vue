@@ -44,8 +44,9 @@ export default {
     return {};
   },
   methods: {
+
     /**
-     * 选中, 属性栏页更新
+     * 标记选中的组件
      *
      *
      */
@@ -57,6 +58,7 @@ export default {
       this.$emit("active");
     }
   }
+
 };
 </script>
 

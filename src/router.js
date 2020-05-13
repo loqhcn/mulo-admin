@@ -29,6 +29,8 @@ const router = new VueRouter({
     // 组件布局
     { path: '/component-layout/index', component: () => import('./views/component-layout/Index.vue') },
     { path: '/component-layout/main', component: () => import('./views/component-layout/Main.vue') },
+    { path: '/component-layout/test/compile', component: () => import('./views/component-layout/test/Compile.js') },
+    { path: '/component-layout/dev/index', component: () => import('./views/component-layout/dev/Index.vue') },
 
     
 

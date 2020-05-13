@@ -43,16 +43,25 @@ const socket = SocketIO('http://127.0.0.1:3000', {
   autoConnect: true
 })
 
+//通过可视化编辑的页面
+Vue.prototype.$views = {}
+//链接
 Vue.prototype.$socket = socket;
-socket.on('view', (data) => {
-  console.log('view',data)
-})
+
+
 
 new Vue({
   store,
   router,
   mounted() {
-    
+    socket.on('view', (res) => {
+      console.log('view', res)
+      let {
+        viewId, data
+      } = res
+      this.$views[viewId] = data;
+
+    })
   },
   render: h => h(App)
 }).$mount('#app')

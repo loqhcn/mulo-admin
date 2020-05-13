@@ -120,13 +120,10 @@
 <script>
 import Canvas from "./Canvas";
 import Preview from "./Preview";
-
 import DefaultUi from "./ui/default";
-
 import Layout from  './components/manage/layout/Layout.vue'
 import Tree from  './components/manage/tree/Tree.vue'
-
-import buildTemplate from './core/buildTemplate'
+import buildTemplate from './compile/buildTemplate'
 
 export default {
   components: {

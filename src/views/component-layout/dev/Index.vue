@@ -1,19 +1,18 @@
-
-<template>
-  <div>
-    <button @click="emit">asdf</button>
-    
-  </div>
-</template>
-
+<template></template>
 <script>
+import Render from "./../compile/Render";
 export default {
+  components: {
+
+  },
   data() {
     return {
-      name: "罗戚洪"
+      name: "罗戚洪",
+      viewId: 1,
+
+      clViews: this.$views
     };
   },
-
   sockets: {
     // view(data) {
     //   console.log("view", data);
@@ -25,15 +24,15 @@ export default {
     //   console.log("socket connected");
     // }
   },
-  mounted() {},
+  mounted() {
+    
+  },
+  render(h) {},
   methods: {
     emit() {
-    
       this.$socket.emit("view", {
         name: "罗戚洪"
       });
-
-
     }
   }
 };

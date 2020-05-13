@@ -10,6 +10,7 @@ let d = compileToFunctions(
         </div>
     `
 );
+console.log(d)
 
 export default {
     data() {
@@ -32,7 +33,23 @@ export default {
             console.log(d);
         }
     },
-    render: d.render,
+    render: () => {
+
+    },
+    created() {
+        // let d = compileToFunctions(
+        //     `
+        //     <div>
+        //         阿斯顿发士大夫
+        //         <div v-if="key" @click="adfasdf">{{msg}}</div>
+        //     </div>
+
+        //     `
+        // );
+        // this.render = d.render;
+        console.log(this)
+        this.$forceUpdate();
+    },
     render1(h) {
         // let compile = createCompiler();
 

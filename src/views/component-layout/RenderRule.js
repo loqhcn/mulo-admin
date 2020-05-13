@@ -1,11 +1,11 @@
 //编译vuejson
 import VueJsonRender from './../../../package/src/form-create/core/VueJsonRender'
 import { isType } from './../../../package/utils/util'
-
 import RuleParse from './core/RuleParse'
 import ComponentContainer from './ComponentContainer'
 
 let ruleParse = false;
+
 
 export default {
     components: {
@@ -24,7 +24,20 @@ export default {
     watch: {
         value: {
             handler(newdata, olddata) {
-                console.log(newdata )
+                console.log(newdata);
+
+                //更新view到socket服务
+                if (!this.viewId) {
+                    console.log('无viewId');
+                    return;
+                }
+
+                //提交到服务器
+                this.$socket.emit('view',{
+                    viewId: this.viewId,
+                    data: newdata
+                })
+
             },
             deep: true
         }
@@ -34,12 +47,13 @@ export default {
     },
     data() {
         return {
-
+            //可视化id
+            viewId: 1,
 
             unique: 0,
             //当前选中组件(加边框和操作)
             activeId: 0,
-            
+
             //规则数据
             rulesParseData: () => {
                 return this.parse();
@@ -73,13 +87,13 @@ export default {
             )
             //Main里更新操作规则
             //右侧属性数据
-            
+
             //右侧属性规则
             this.$parent.$parent.attributeRules = componentRule.renderAttributeEdit ?
                 componentRule.renderAttributeEdit($element)
                 :
                 [];
-            
+
         },
         parse() {
 

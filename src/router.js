@@ -5,6 +5,26 @@ import Home from './views/Home.vue'
 Vue.use(VueRouter)
 
 
+import ComponentLayoutIndex from './views/component-layout/dev/Index.vue';
+
+let clComponents = {
+  'index': {
+    viewId: 1,
+    component: ComponentLayoutIndex
+  }
+}
+//处理组件
+
+//默认组件
+function getComponent(component,templateId){
+  let clViewComponentMain = {
+    render(h) {
+      
+    },
+  }
+}
+
+
 
 const router = new VueRouter({
   routes: [
@@ -32,10 +52,10 @@ const router = new VueRouter({
     { path: '/component-layout/test/compile', component: () => import('./views/component-layout/test/Compile.js') },
     { path: '/component-layout/dev/index', component: () => import('./views/component-layout/dev/Index.vue') },
 
-    
+
 
     // 其他测试页面
-    
+
     { path: '/test/vnode', component: () => import('./views/test/vnode.js') },
 
 
@@ -52,7 +72,7 @@ const router = new VueRouter({
 
       ]
     },
-    
+
 
   ]
 })

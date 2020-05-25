@@ -1,9 +1,11 @@
-
-export default function( rules ){
-    console.log('buildTemplate',rules);
+import { compile, compileToFunctions, ssrCompileToFunctions } from 'vue-template-compiler'
 
 
-    let el =  render( toRoot(rules) )
+export default function buildTemplate(rules) {
+    console.log('buildTemplate', rules);
+
+
+    let el = render(toRoot(rules))
 
     return el
 }
@@ -16,7 +18,7 @@ export default function( rules ){
  * @return {dom} vue模板
  */
 function render(vnode) {
-    if(!vnode){
+    if (!vnode) {
         return null;
     }
     // Strings just convert to #text Nodes:
@@ -31,9 +33,9 @@ function render(vnode) {
     return n;
 }
 
-function toRoot(rules){
+function toRoot(rules) {
     return {
-        type:'div',
-        children:rules
+        type: 'div',
+        children: rules
     }
 }

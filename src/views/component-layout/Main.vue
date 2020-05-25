@@ -8,9 +8,9 @@
         <div class="left">
           <h3>设计器</h3>
         </div>
+
         <div class="right">
           <el-button @click="buildTemplate">生成template</el-button>
-
           <el-button @click="showJson">打印JSON规则</el-button>
           <el-button @click="clear">清除</el-button>
           <el-button @click="preview">预览</el-button>
@@ -39,14 +39,8 @@
         </div>
 
         <!-- 编辑区 -->
-        <div class="body edit-body" tabindex="1" 
-          
-          @keydown.exact="keydown"
-          
-          
-          @click="focusMain"
-         >
-          <cl-canvas ref="cl_canvas"></cl-canvas>
+        <div class="body edit-body" tabindex="1" @keydown.exact="keydown" @click="focusMain">
+          <cl-canvas @focus-main="focusMain" ref="cl_canvas"></cl-canvas>
         </div>
 
         <div class="right">
@@ -109,29 +103,20 @@
         </div>
       </div>
     </div>
-
-    <!-- 弹出层 编辑 -->
-    <cl-layout ref="cl_layout" @close="focusMain"></cl-layout>
-    <cl-tree ref="cl_tree" @close="focusMain"></cl-tree>
-
   </div>
 </template>
 
 <script>
 import Canvas from "./Canvas";
-import Preview from "./Preview";
+import Preview from "./preview/Preview";
 import DefaultUi from "./ui/default";
-import Layout from  './components/manage/layout/Layout.vue'
-import Tree from  './components/manage/tree/Tree.vue'
-import buildTemplate from './compile/buildTemplate'
+
+import buildTemplate from "./compile/buildTemplate";
 
 export default {
   components: {
     [Canvas.name]: Canvas,
     [Preview.name]: Preview,
-    //cl-layout
-    [Layout.name]: Layout,
-    [Tree.name]: Tree,
 
   },
   data() {
@@ -170,13 +155,16 @@ export default {
     };
   },
   created() {},
+  mounted() {
+    this.focusMain();
+  },
   methods: {
     /**
      * 聚焦div的事件
      *
      */
     focusMain() {
-      document.querySelector('.edit-body').focus();
+      document.querySelector(".edit-body").focus();
     },
     // 开始拖动
     dragStart(row, e) {
@@ -199,20 +187,20 @@ export default {
     },
     /**
      * 获得rules
-     * 
+     *
      */
     getRules() {
       return this.$refs.cl_canvas.rules;
     },
     /**
      * 编译模板
-     * 
-     * 
+     *
+     *
      */
-    buildTemplate(){
+    buildTemplate() {
       let rules = this.getRules();
-      let dom =  buildTemplate( rules );
-      console.log('html',dom);
+      let dom = buildTemplate(rules);
+      console.log("html", dom);
     },
     preview() {
       this.$nextTick(() => {
@@ -227,20 +215,25 @@ export default {
     /**
      * 键盘事件处理
      * @todo 快捷键处理
-     * 
+     *
      */
     keydown(e) {
       // L layout 布局控制器
-      if(e.code=='KeyL'){
-        this.$refs.cl_layout.show();
+      if (e.code == "KeyL") {
+        this.showLayout("cl_layout");
       }
       //T tree 组件树管理
-      else if(e.code=="keyT"){
-        this.$refs.cl_tree.show();
+      else if (e.code == "KeyT") {
+        this.showLayout("cl_tree");
       }
       console.log(e);
+    },
+    //显示管理弹出层
+    showLayout(ref) {
+      this.$nextTick(() => {
+        return this.$refs.cl_canvas.$refs[ref].show();
+      });
     }
-
   }
 };
 </script>

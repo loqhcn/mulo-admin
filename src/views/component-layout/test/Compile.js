@@ -4,10 +4,9 @@ import { compile, compileToFunctions, ssrCompileToFunctions } from 'vue-template
 
 let d = compileToFunctions(
     `
-        <div>
-            阿斯顿发士大夫
-            <div v-if="key" @click="adfasdf">{{msg}}</div>
-        </div>
+    
+    <div>adasdfsdf <div>asdfsdf</div> </div>
+    
     `
 );
 console.log(d)
@@ -33,9 +32,8 @@ export default {
             console.log(d);
         }
     },
-    render: () => {
-
-    },
+    render: d.render,
+    staticRenderFns:d.staticRenderFns,
     created() {
         // let d = compileToFunctions(
         //     `

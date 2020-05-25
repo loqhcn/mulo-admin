@@ -1,28 +1,28 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from './views/Home.vue'
-
+import clApp from './views/component-layout/core/app'
 Vue.use(VueRouter)
 
+import DevIndex from './views/component-layout/dev/Index.vue'
 
-import ComponentLayoutIndex from './views/component-layout/dev/Index.vue';
 
+
+
+/**
+ * 配置可视化编辑组件
+ * - viewId : relation a cl-view-edit view
+ * - component : 组件名称
+ * 
+ */
 let clComponents = {
   'index': {
     viewId: 1,
-    component: ComponentLayoutIndex
+    component: DevIndex//() => import('./views/component-layout/dev/Index.vue')
   }
 }
 //处理组件
-
-//默认组件
-function getComponent(component,templateId){
-  let clViewComponentMain = {
-    render(h) {
-      
-    },
-  }
-}
+let components = clApp.parseComponent(clComponents);
 
 
 
@@ -50,7 +50,7 @@ const router = new VueRouter({
     { path: '/component-layout/index', component: () => import('./views/component-layout/Index.vue') },
     { path: '/component-layout/main', component: () => import('./views/component-layout/Main.vue') },
     { path: '/component-layout/test/compile', component: () => import('./views/component-layout/test/Compile.js') },
-    { path: '/component-layout/dev/index', component: () => import('./views/component-layout/dev/Index.vue') },
+    { path: '/component-layout/dev/index', component: components.index },
 
 
 

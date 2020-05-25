@@ -5,11 +5,11 @@
 </template>
 
 <script>
-import PreviewRenderRule from "./PreviewRenderRule";
+import Render from "./Render";
 export default {
   name: "preview",
   components: {
-    [PreviewRenderRule.name]: PreviewRenderRule
+    [Render.name]: Render
   },
   props: {
     setting: {

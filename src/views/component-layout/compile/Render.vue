@@ -9,7 +9,7 @@ export default {
   props: {
     propName: {
       type: Number,
-      default: a
+      default: 1
     }
   },
   render(h) {

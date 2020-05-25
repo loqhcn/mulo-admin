@@ -1,5 +1,5 @@
 //编译vuejson
-import VueJsonRender from '../../../package/src/form-create/core/VueJsonRender'
+import VueJsonRender from '../../../../package/src/form-create/core/VueJsonRender'
 
 export default {
     name: 'preview-render-rule',
@@ -12,11 +12,11 @@ export default {
             }
         },
     },
-    
+
     watch: {
-        value:{
-            deep:true,
-            handle:(newValue,oldValue)=>{
+        value: {
+            deep: true,
+            handle: (newValue, oldValue) => {
                 console.log(newValue)
             }
         }

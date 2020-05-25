@@ -28,9 +28,9 @@ export default {
     vm: {
       default: false
     },
+
     id: {
       type: Number
-      // required: true
     },
 
     //拖动组件的规则
@@ -44,21 +44,13 @@ export default {
     return {};
   },
   methods: {
-
-    /**
-     * 标记选中的组件
-     *
-     *
-     */
+    //标记选中的组件
     onClick() {
-      console.log(this.id, this.$element);
-      //   console.log("click");
-      this.vm.selectComponent(this.id);
-
       this.$emit("active");
+      this.vm.selectComponent();
+
     }
   }
-
 };
 </script>
 

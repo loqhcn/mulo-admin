@@ -1,18 +1,22 @@
 import { compile, compileToFunctions, ssrCompileToFunctions } from 'vue-template-compiler'
 
 
+/**
+ * 规则生成模板
+ * @param {Array} rules 
+ * 
+ * @return templateDom 未编译的vue模板源码
+ */
 export default function buildTemplate(rules) {
     console.log('buildTemplate', rules);
-
-
     let el = render(toRoot(rules))
-
     return el
 }
 
 
 /**
  * vuejson 生成 vuetemplate
+ * @logic 通过创建dom生成dom树
  * @param {vuejson} vnode 
  * 
  * @return {dom} vue模板
@@ -33,6 +37,12 @@ function render(vnode) {
     return n;
 }
 
+/**
+ * 规则放到div容器中
+ * 
+ * @param {*} rules
+ * @return VueJson
+ */
 function toRoot(rules) {
     return {
         type: 'div',

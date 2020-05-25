@@ -3,7 +3,7 @@
     <div class="eidt-layer">
       <h1>Tree Manage</h1>
       <div>
-        <el-tree
+        <mulo-cl-tree
           :data="data"
           :props="{
               label:'id'
@@ -18,9 +18,10 @@
           @node-drop="handleDrop"
           :render-content="renderContent"
           draggable
+          @input="input"
           :allow-drop="allowDrop"
           :allow-drag="allowDrag"
-        ></el-tree>
+        ></mulo-cl-tree>
       </div>
       <div>
         <button @click="success">完成</button>
@@ -58,7 +59,7 @@ export default {
                   id: 9,
                   label: "三级 1-1-1"
                 },
-                "123123"
+                
               ]
             }
           ]
@@ -109,12 +110,14 @@ export default {
     };
   },
   methods: {
+    input(d){
+      console.log(d)
+    },
     renderContent(h, { node, data, store }) {
       if (!data || data.split) {
         node.visible = false;
         return;
       }
-
       return <div>{node.id}</div>;
     },
     show() {

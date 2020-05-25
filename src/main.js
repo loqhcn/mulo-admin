@@ -24,6 +24,9 @@ Vue.use(formCrate);
 
 import CheckBoxGroup1 from '../package/components/checkbox-group/CheckBoxGroup.vue'
 Vue.component('mulo-checkbox-group', CheckBoxGroup1)
+//基于elementui的tree修改的
+import Tree from './components/tree/index.js'
+Vue.component('mulo-cl-tree', Tree)
 
 console.log(muloAdmin)
 

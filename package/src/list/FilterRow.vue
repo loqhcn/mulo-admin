@@ -81,6 +81,7 @@
           <template v-if="li.type=='numberrange' ">
             <number-range v-model="rulesModel[ li.field ]" :placeholders="li.placeholders"></number-range>
           </template>
+
         </div>
       </template>
 
@@ -309,6 +310,7 @@ export default {
     reset() {
       //重新加载所有筛选组件
       this.resetStatus = true;
+
       this.rulesModel = {};
       this.$nextTick(() => {
         this.resetStatus = false;

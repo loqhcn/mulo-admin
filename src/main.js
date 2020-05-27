@@ -15,6 +15,7 @@ Vue.config.productionTip = false
 // import './assets/iconfont-mulo-ui/iconfont.css'
 
 import './../mulo-ui/default/index.scss'
+import './views/component-layout/css/index.scss';
 //mulo-admin
 import muloAdmin from '../package/index.js'
 Vue.use(muloAdmin);

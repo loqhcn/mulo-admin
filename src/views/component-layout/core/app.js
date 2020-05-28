@@ -52,8 +52,9 @@ class App {
                     console.log('触发view更新事件', view);
                     this.renderInit();
                 }
+                
                 this.$cl.regOnUpdate(this.viewId, updateAction, this._uid);
-
+                updateAction();
             },
             methods: {
                 renderInit() {
@@ -98,8 +99,9 @@ class App {
                             this.$refs.view.innerHTML = ''
                             this.$refs.view.appendChild(vm.$el);
                         }
-
+                        
                         if (typeof clComponent == 'function') {
+                            //webpack异步加载
                             clComponent.call(this).then(c => {
                                 console.log('c', c)
                                 render(c.default);

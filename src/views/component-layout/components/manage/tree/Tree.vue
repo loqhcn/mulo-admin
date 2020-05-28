@@ -52,7 +52,7 @@ export default {
   data() {
     return {
       classStr: "",
-      visible: true,
+      visible: false,
       data: [
         {
           id: 1,

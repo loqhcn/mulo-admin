@@ -81,7 +81,6 @@
           <template v-if="li.type=='numberrange' ">
             <number-range v-model="rulesModel[ li.field ]" :placeholders="li.placeholders"></number-range>
           </template>
-
         </div>
       </template>
 
@@ -261,7 +260,7 @@ export default {
 
       // 筛选的数据
       rulesModel: {
-        search: "",
+        search: ""
       },
       // 日期时间选择范围的快捷选择
       pickerOptions: {

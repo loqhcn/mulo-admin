@@ -4,6 +4,26 @@ var io = require('socket.io')(http, {
     path: '/ws'
 });
 
+//rules数据定时同步
+let sync = false;
+
+if(sync){
+    
+
+}
+
+/**
+ * 同步
+ * 
+ */
+async function syncServer(){
+    setInterval(() => {
+        // console.log('同步代码')
+        
+    }, 5000);
+}
+syncServer();
+
 //设置允许跨域访问该服务.
 app.all('*', function (req, res, next) {
     res.header('Access-Control-Allow-Origin', `${req.headers.origin || '*'}`);

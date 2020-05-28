@@ -116,8 +116,7 @@ import buildTemplate from "./compile/buildTemplate";
 export default {
   components: {
     [Canvas.name]: Canvas,
-    [Preview.name]: Preview,
-
+    [Preview.name]: Preview
   },
   data() {
     return {
@@ -154,7 +153,9 @@ export default {
       tabRightActive: 0
     };
   },
-  created() {},
+  created() {
+    this.$control.main = this;
+  },
   mounted() {
     this.focusMain();
   },
@@ -220,6 +221,13 @@ export default {
     keydown(e) {
       // L layout 布局控制器
       if (e.code == "KeyL") {
+        
+        let selectEd = this.$control.getSelected();
+        if(!selectEd){
+          this.$toast('先选择一个节点')
+          return ;
+        }
+
         this.showLayout("cl_layout");
       }
       //T tree 组件树管理

@@ -25,7 +25,10 @@ export default {
 
     },
     created() {
+        
+        this.$control.render = this;
         ruleParse = new RuleParse(this);
+        
     },
     data() {
         return {

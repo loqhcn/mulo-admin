@@ -36,11 +36,14 @@ export default {
   },
   watch: {
     rules: {
-      handler(newdata, olddata) {},
+      handler(newdata, olddata) {
+        console.log("canvas watch rules update");
+      },
       deep: true
     }
   },
   created() {
+    this.$control.canvas = this;
     let view = this.$views[this.viewId];
     if (view) {
       this.rules = view;

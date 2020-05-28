@@ -55,11 +55,15 @@ import ClClient from './views/component-layout/core/ClChient.js'
 Vue.prototype.$views = {}
 Vue.prototype.$cl = new ClClient();
 
+import Control from './views/component-layout/core/Control'
+Vue.prototype.$control = new Control();
+
+
 //链接
 Vue.prototype.$socket = socket;
 
 
-new Vue({
+window.vm = new Vue({
   store,
   router,
   mounted() {
@@ -79,13 +83,15 @@ new Vue({
 
     //页面初始化 加载历史编辑数据
     socket.on('view-init', (res) => {
+      console.log('view-init')
       let views = res.views;
       for (let x in views) {
         this.$views[x] = views[x]
         this.$cl.triggerUpdated(x, views[x]);
       }
     })
-    socket.emit('view-init')
+    
+    socket.emit('view-init', { a: 1 })
 
   },
   render: h => h(App)

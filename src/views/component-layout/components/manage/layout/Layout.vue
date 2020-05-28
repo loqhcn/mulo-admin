@@ -1,12 +1,21 @@
 <template>
-  <div v-if="visible" tabindex="2" ref="main" @keydown.enter.exact="hide" class="shadow">
+  <div
+    v-if="visible"
+    tabindex="1"
+    ref="main"
+    @keydown.enter.exact="hide"
+    @click.stop.prevent
+    class="shadow"
+  >
     <div class="eidt-layer">
       <h1>Layout Manage</h1>
+
       <div>
         <span>class:</span>
         <input type="text" v-model="classStr" />
       </div>
-      <div>
+
+      <div class="flex">
         <button @click="success">完成</button>
       </div>
     </div>
@@ -21,6 +30,28 @@ export default {
       classStr: "",
       visible: false
     };
+  },
+  computed: {
+    activityRule() {
+      return this.$control.getSelected();
+    }
+  },
+  watch: {
+    /**
+     * 刷新rules的规则
+     *
+     */
+    classStr(newValue, oldValue) {
+      this.activityRule.attrs
+      = Object.assign(
+        {
+          
+        }
+      )
+    }
+  },
+  created() {
+    this.classStr = this.activityRule.attrs?this.activityRule.attrs.class : '';
   },
   methods: {
     show() {

@@ -68,6 +68,7 @@ export default {
         viewId: this.viewId,
         data: this.rules
       });
+      
     },
     /**
      * 当 rules被更新, 规则同步到服务器

@@ -1,0 +1,33 @@
+@import "./var.scss";
+
+// 基础设置
+html{font-size: 15px;}
+
+*, :after, :before { -webkit-box-sizing: border-box; box-sizing: border-box; /*-webkit-user-select: none; outline: none; -webkit-tap-highlight-color: transparent; -webkit-tap-highlight-color: transparent; */}
+html,body{ height: 100%; background: $color-white-dark;  font-family: PingFangSC-Regular,Helvetica,Droid Sans,Arial,sans-serif;}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, span, input, p, a { margin: 0; padding: 0; }
+img { border: 0; margin: 0; padding: 0; vertical-align: middle; }
+h1, h2, h3, h4, h5, h6, span { font-weight: normal; }
+a { text-decoration: none; outline: none; }
+ul{ list-style: none; }
+li{list-style: none;}
+em{ font-style: normal; }
+
+/* 半px的边框效果 */
+.border-none{ border: none !important;}
+.border-bottom { position: relative; }
+.border-bottom:after { content: ""; display: block; position:absolute; border-bottom: 1px solid #E5E5E5; font-size: 0; width: 100%; left:0; right:0; height: 0; -webkit-transform: scaleY(0.5); bottom: 0;transform: scaleY(0.5); z-index: 9;}
+.border-top { position: relative; }
+.border-top:after { content: ""; display: block; position:absolute; border-bottom: 1px solid #E5E5E5; font-size: 0; width: 100%; left:0; right:0; height: 0; -webkit-transform: scaleY(0.5); top: 0;transform: scaleY(0.5); z-index: 9;}
+
+.fiexd-top{ position: fixed !important; left:0; top:0; right: 0; z-index: 999 !important; }
+.fiexd-bottom{ position: fixed !important; left:0; bottom:0; right: 0; z-index: 999 !important; }
+.text-right{ text-align: right !important;}
+.text-center{ text-align: center !important;}
+.text-left{ text-align: left !important;}
+.relative{ position:relative;}
+.display-block{ display: block !important;}
+.display-none{ display: none !important;}
+.display-inlineblock{ display: inline-block !important;}
+
+

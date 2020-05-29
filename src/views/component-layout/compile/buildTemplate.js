@@ -29,6 +29,11 @@ function render(vnode) {
     if (vnode.split) return document.createTextNode(vnode);
     // create a DOM element with the nodeName of our VDOM element:
     let n = document.createElement(vnode.type);
+    
+    //渲染属性
+    
+    n.className = vnode.attrs && vnode.attrs.class ? vnode.attrs.class : '';
+
     // copy attributes onto the new node:
     let a = vnode.attributes || {};
     Object.keys(a).forEach(k => n.setAttribute(k, a[k]));

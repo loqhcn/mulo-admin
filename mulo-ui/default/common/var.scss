@@ -1,0 +1,48 @@
+
+// # 颜色
+
+//默认色调
+$color-bg:#FEFEFE;
+$color-default:rgb(91, 225, 248);
+
+//场景颜色
+$color-success: #67c23a;
+$color-warning: #e6a23c;
+$color-danger: #f56c6c;
+$color-info: #909399;
+
+$color-primary: #409eff;
+
+//常用颜色
+$color-white:white;
+$color-white-dark:#FCFCFC; //暗白色 用于一些背景
+$color-font:rgb(19, 19, 19); //默认文字
+
+$color-pink: #cc5f7c; //粉色花瓣
+$color-green: #20360c; //花梗
+
+// # 边框颜色
+$color-border-1:#DCDFE6;
+$color-border-2:#E4E7ED;
+$color-border-4:#EBEEF5;
+$color-border-5:#F2F6FC;
+
+//带active的边框
+$color-active-border:#409eff;
+//navmenu背景
+
+$color-nav-bg:#545C64;
+$color-nav-item-bg:rgb(37, 43, 49);
+
+
+
+// # 圆角设置
+$radius-default:5px; //默认圆角设置
+
+
+// 默认距离适应
+// 适配在手机端上面的显示效果
+
+$space-control:0.5rem; //控件见的距离
+$space-container:0.6rem; //容器见的间距
+

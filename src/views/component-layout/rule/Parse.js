@@ -8,7 +8,7 @@
  * 
  */
 import defaultUi from './../ui/default'
-
+import _ from 'lodash'
 
 /**
  * @method {Function} flush 内部事件绑定刷新了rules 回调进行刷新
@@ -117,9 +117,27 @@ export default class RuleParse {
 
             let $element = $rules[x];
 
+            // opClassList 注入到  class
+            let classList = {};
+            for (var opc in (element.opClassList || {})) {
+                if (element.opClassList && element.opClassList[opc]) {
+                    classList[element.opClassList[opc]] = true;
+                }
+            }
+
+            //因为使用了根的 class 所以这个注入到里面
+            let attrsClassListArr = ((element.attrs || {}).class || '').split(/\s+/g)
+            let attrsClassList = {}
+            attrsClassListArr.forEach((li, index) => {
+                if (li) {
+                    attrsClassList[li] = true;
+                }
+            })
+            
+
             //dom渲染
             element = Object.assign(element, {
-
+                class: _.assign((element.class || {}), classList, attrsClassList),
                 on: {
 
                     //拖动组件落下

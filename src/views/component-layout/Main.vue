@@ -233,6 +233,20 @@ export default {
       //T tree 组件树管理
       else if (e.code == "KeyT") {
         this.showLayout("cl_tree");
+      }else if (e.code == "Delete") {
+
+        let info =  this.$control.getSelected();
+        if(!info){
+          return;
+        }
+        let parent = this.$control.getParent(info);
+        console.log(parent)
+        if(parent){
+          parent.arr.splice(parent.index,1)
+          this.$control.$forceUpdate();
+        }
+
+      
       }
       console.log(e);
     },

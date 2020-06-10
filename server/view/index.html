@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>同步编辑</title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <ul id="messages"></ul>
+    <div class="app" id="app">
+        <div>uid:{{uid}}</div>
+        <form action="">
+            <input v-model="row.name" type="text">
+        </form>
+        <div>
+            <button class="btn" @click="sendObj">发送</button>
+        </div>
+    </div>
+    <script src="https://cdn.bootcdn.net/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+    <script>
+        var socket = io({
+            path:'/ws'
+        });
+        var vm = new Vue({
+            el: '.app',
+            watch: {
+                row: {
+                    deep: true,
+                    handler: (newValue, oldValue) => {
+
+
+                        if (vm.lock) {
+                            vm.lock = false;
+                            return;
+                        }
+                        socket.emit('row', newValue)
+                    }
+                }
+
+            },
+            created() {
+                var _this = this;
+                socket.on('edit', function (msg) {
+
+                });
+
+                socket.on('info', function (info) {
+                    console.log(info)
+                    _this.uid = info.uid;
+                });
+
+                socket.on('row', function (data) {
+                    console.log(data)
+                    if (data.uid == _this.uid) {
+                        return;
+                    }
+                    _this.lock = true;
+                    _this.$set(_this.$data, 'row', data.row)
+                });
+
+                socket.on('obj', function (data) {
+                    console.log(data)
+                  
+                    let MyComponent = data.obj;
+                    var component = new MyComponent().$mount()
+                    document.getElementById('app').appendChild(component.$el)
+                });
+
+            },
+            data() {
+                return {
+                    uid: 0,
+                    lock: false,
+                    row: {
+                        name: '罗戚洪'
+                    }
+                }
+            },
+            methods: {
+                sendObj() {
+                    let obj = {
+                        template: ` <button class="btn" @click="sendObj">发送</button> `,
+                        methods: {
+                            sendObj: function () {
+                                console.log('obj')
+                            }
+                        }
+                    }
+
+                    let MyComponent = Vue.extend(obj);
+                    var component = new MyComponent()
+                    
+                    let objData =   JSON.stringify(component)
+                    console.log(objData);
+
+                    // socket.emit('obj', {
+                    //     msg:1,
+                    //     obj:component
+                    // })
+                   
+
+                }
+            },
+
+        })
+
+
+    </script>
+</body>
+
+</html>

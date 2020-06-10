@@ -4,11 +4,17 @@ var io = require('socket.io')(http, {
     path: '/ws'
 });
 
+
+var IndexRouter = require('./router/Index')
+app.use(IndexRouter)
+app.use(function (err, req, res, next) {
+    console.error(err.stack)
+    res.status(500).send('Something broke!')
+})
 //rules数据定时同步
 let sync = false;
 
-if(sync){
-    
+if (sync) {
 
 }
 
@@ -16,10 +22,10 @@ if(sync){
  * 同步
  * 
  */
-async function syncServer(){
+async function syncServer() {
     setInterval(() => {
         // console.log('同步代码')
-        
+
     }, 5000);
 }
 syncServer();
@@ -36,7 +42,6 @@ app.all('*', function (req, res, next) {
 
 
 app.all('/', (req, res) => {
-
     res.send({
         body: req.body,
         subdomains: req.subdomains,
@@ -44,13 +49,22 @@ app.all('/', (req, res) => {
         fresh: req.fresh,
         header: req.headers
     })
-
 });
 
 app.all('/home', (req, res) => {
-
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/view/index.html');
 });
+
+app.all('/test/pages', (req, res) => {
+    res.json({
+        code: 200,
+        data: {
+            info: {
+                a: 1
+            }
+        }
+    })
+})
 
 
 var sockets = {};
@@ -89,7 +103,7 @@ io.on('connection', (socket) => {
 
     });
 
-    
+
     //获取初始化的views
     socket.on('view-init', (row) => {
         io.emit('view-init', {

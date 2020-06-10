@@ -10,7 +10,6 @@ class Control {
         this.main = null;
         this.canvas = null;
         this.render = null;
-
     }
 
     /**
@@ -27,7 +26,6 @@ class Control {
     $forceUpdate(){
         this.render && this.render.$forceUpdate();
     }
-
     /**
      * 获取当前选中的节点
      * 

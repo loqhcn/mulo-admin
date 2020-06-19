@@ -147,6 +147,18 @@ export default {
   },
   created() {
     this.getList();
+
+    this.$nextTick(() => {
+      //筛选
+      this.$set(this.filter, "filters", [
+        // 时间日期范围筛选
+        {
+          type: "datetimerange",
+          field: "addtime",
+          title: "预约时间"
+        }
+      ]);
+    });
   },
   methods: {
     getList(page) {

@@ -15,7 +15,7 @@
       <!-- 筛选栏目 -->
       <template v-for="(li,index) in rulesData.filters">
         <div
-          :key="index"
+          :key="li.field+''+index"
           :class="`item ${li.className?li.className:''} ${rulesData.joinClass?li.field:''}`"
         >
           <div v-if="li.title" class="field-name">{{li.title}}</div>
@@ -30,10 +30,10 @@
 
           <!-- 选择框 -->
           <template v-if="li.type=='select'">
-            <el-select v-model="rulesModel[ li.field ]" clearable placeholder="请选择">
+            <el-select v-model="rulesModel[ li.field ]" clearable :placeholder="`li.placeholder || '请选择'`">
               <el-option
                 v-for="item in li.selects"
-                :key="item.key"
+                :key="`${li.field}${item.key}`"
                 :label="item.value"
                 :value="item.key"
               ></el-option>
@@ -142,6 +142,14 @@ export default {
           // 筛选框详细配置
           filters: []
         };
+      }
+    }
+  },
+  watch: {
+    rules: {
+      deep: true,
+      handler(newValue, oldValue) {
+        this.parseFilterData(this.rules);
       }
     }
   },
@@ -320,6 +328,7 @@ export default {
     },
     //读取输入的数据
     parseFilterData(rules) {
+      rules =rules || {}
       //搜索的不同数据类型配置
       if (typeof rules.search == "string") {
         this.rulesData.search.visible = true;

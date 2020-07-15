@@ -27,6 +27,7 @@ let components = clApp.parseComponent(clComponents);
 
 
 const router = new VueRouter({
+  mode:'history',
   routes: [
     {
       path: '/',

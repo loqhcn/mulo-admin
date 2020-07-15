@@ -1,10 +1,11 @@
 {
   "name": "mulo-admin",
-  "version": "0.1.0",
+  "version": "0.1.5",
   "main": "lib/mulo.umd.js",
   "files": [
     "packpage",
-    "dist"
+    "dist",
+    "lib"
   ],
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -13,7 +14,7 @@
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "build:list-default": "vue-cli-service build --target lib --name muloListDefault package/list/Default.vue",
-    "build:lib": "vue-cli-service build --target lib --name mulo package/index.js",
+    "build:lib": "vue-cli-service build --target lib --name mulo --dest lib package/index.js",
     "test": "karma start karma.conf.js"
   },
   "dependencies": {

@@ -163,7 +163,7 @@ export default {
       };
       //加载列表
       this.$nextTick(() => {
-        this.$refs.list_default.loadLostData(reset);
+        this.$refs.list_default.loadList(reset);
       });
     },
 

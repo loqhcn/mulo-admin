@@ -127,16 +127,16 @@ export default {
         this.$emit("get-list", this.page);
         return;
       }
-      this.loadLostData();
+      this.loadList();
     },
     /**
      * 加载列表
      *
      * @param {Object} params 新的参数
      *
-     * @example this.$refs.xxx.loadLostData(true)
+     * @example this.$refs.xxx.loadListData(true)
      */
-    loadLostData(reset, callback) {
+    loadList(reset, callback) {
       let params = {
         page: this.page,
         psize: this.psize,

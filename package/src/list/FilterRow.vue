@@ -30,7 +30,11 @@
 
           <!-- 选择框 -->
           <template v-if="li.type=='select'">
-            <el-select v-model="rulesModel[ li.field ]" clearable :placeholder="`li.placeholder || '请选择'`">
+            <el-select
+              v-model="rulesModel[ li.field ]"
+              clearable
+              :placeholder="li.placeholder || '请选择'"
+            >
               <el-option
                 v-for="item in li.selects"
                 :key="`${li.field}${item.key}`"
@@ -48,6 +52,21 @@
               :picker-options="pickerOptions"
               :value-format="li.valueFormat || 'yyyy-MM-dd HH:mm:ss'"
               :format="li.format || 'yyyy-MM-dd HH:mm:ss'"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              align="right"
+            ></el-date-picker>
+          </template>
+
+          <!-- 日期选择器 -->
+          <template v-if="li.type=='daterange'">
+            <el-date-picker
+              v-model="rulesModel[ li.field ]"
+              type="daterange"
+              :picker-options="pickerOptions"
+              :value-format="li.valueFormat || 'yyyy-MM-dd'"
+              :format="li.format || 'yyyy-MM-dd'"
               range-separator="至"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
@@ -328,7 +347,7 @@ export default {
     },
     //读取输入的数据
     parseFilterData(rules) {
-      rules =rules || {}
+      rules = rules || {};
       //搜索的不同数据类型配置
       if (typeof rules.search == "string") {
         this.rulesData.search.visible = true;

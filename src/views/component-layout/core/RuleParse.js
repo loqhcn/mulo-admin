@@ -115,7 +115,7 @@ export default class RuleParse {
             if (typeof element == 'string') {
                 continue;
             }
-
+            
             let $element = $rules[x];
 
             //dom渲染
@@ -178,6 +178,7 @@ export default class RuleParse {
                 on: {
                     // ## 点击选中某个组件
                     active: () => {
+
                         this.vm.activityRule = $rules[x]
                         // //
                         // $rules[x].operation = Object.assign($rules[x].operation || {}, {

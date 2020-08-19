@@ -12,6 +12,7 @@
   * [样式编写](/component-layout/style.md)
   * [部署](/component-layout/production.md)
   * [部署](/component-layout/bug.md)
+  * [组件定义](/component-layout/component-package.md)
 
 * [列表页](/list/README.md)
   * [基础列表](/list/default.md)

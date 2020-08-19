@@ -18,6 +18,7 @@
       </div>
 
       <div class="main flex space-between">
+        
         <div class="left flex column center-line">
           <div class="components-select">
             <!-- 组件分类 -->
@@ -116,7 +117,7 @@ import buildTemplate from "./compile/buildTemplate";
 export default {
   components: {
     [Canvas.name]: Canvas,
-    [Preview.name]: Preview
+    [Preview.name]: Preview,
   },
   data() {
     return {
@@ -139,18 +140,18 @@ export default {
         //容器边框显示
         containerBorder: true,
         //容器内边距
-        containerPadding: 0
+        containerPadding: 0,
       },
       screenTypes: [
         { type: "auto" },
-        { type: "iphone6", width: 375, height: 667 }
+        { type: "iphone6", width: 375, height: 667 },
       ],
       screenTypeActive: 0,
       //vuejson 整个编辑规则
       rules: [],
 
       tabRight: ["属性", "设置", "结构", "样式"],
-      tabRightActive: 0
+      tabRightActive: 0,
     };
   },
   created() {
@@ -172,7 +173,7 @@ export default {
       e.dataTransfer.setData(
         "text/plain",
         JSON.stringify({
-          row: row
+          row: row,
         })
       );
 
@@ -251,8 +252,8 @@ export default {
       this.$nextTick(() => {
         return this.$refs.cl_canvas.$refs[ref].show();
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

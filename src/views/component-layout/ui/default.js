@@ -169,7 +169,7 @@ export default [
                     src: '/static/img/1.jpg'
                 },
                 attrs: {
-
+                    
                 },
                 children: ["标签一"],
                 renderAttributeEdit:(element)=>{

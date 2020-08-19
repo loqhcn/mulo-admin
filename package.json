@@ -1,7 +1,7 @@
 {
   "name": "mulo-admin",
-  "version": "0.1.6",
-  "main": "lib/mulo.umd.js",
+  "version": "0.1.7",
+  "main": "lib/mulo.umd.min.js",
   "files": [
     "packpage",
     "dist",

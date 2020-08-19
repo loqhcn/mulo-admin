@@ -27,7 +27,7 @@ let components = clApp.parseComponent(clComponents);
 
 
 const router = new VueRouter({
-  mode:'history',
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -52,7 +52,7 @@ const router = new VueRouter({
     { path: '/component-layout/main', component: () => import('./views/component-layout/Main.vue') },
     { path: '/component-layout/test/compile', component: () => import('./views/component-layout/test/Compile.js') },
     { path: '/component-layout/dev/index', component: components.index },
-
+    { path: '/component-layout/component-package/index', component: () => import('./views/component-layout/component-package/Index.vue') },
 
 
     // 其他测试页面

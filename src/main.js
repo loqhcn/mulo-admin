@@ -44,7 +44,7 @@ Vue.use(eleme)
 
 // # 可视化编辑页面
 import SocketIO from "socket.io-client"
-const socket = SocketIO('http://192.168.1.253:3000', {
+const socket = SocketIO('http://127.0.0.1:3000', {
   path: "/ws",
   autoConnect: true
 })
@@ -58,10 +58,12 @@ Vue.prototype.$cl = new ClClient();
 import Control from './views/component-layout/core/Control'
 Vue.prototype.$control = new Control();
 
-
 //链接
 Vue.prototype.$socket = socket;
 
+//自动加载组件包
+import clPkg from './ClPkg.js'
+Vue.use(clPkg);
 
 window.vm = new Vue({
   store,
@@ -71,6 +73,7 @@ window.vm = new Vue({
      * 页面更新
      * @param {viewId} viewid
      * @param {ClView} data
+     * 
      */
     socket.on('view', (res) => {
       console.log('view', res)
@@ -90,7 +93,7 @@ window.vm = new Vue({
         this.$cl.triggerUpdated(x, views[x]);
       }
     })
-    
+
     socket.emit('view-init', { a: 1 })
 
   },

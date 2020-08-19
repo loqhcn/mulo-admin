@@ -88,7 +88,7 @@ export default {
       this.rules.push({
         ...row
       });
-
+      
       //刷新
       this.viewToServer();
 

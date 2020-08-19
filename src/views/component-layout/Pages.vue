@@ -1,6 +1,6 @@
 <template>
     <div>
-        
+        <div>页面管理</div>
     </div>
 </template>
 
@@ -11,5 +11,7 @@
 </script>
 
 <style lang="scss" scoped>
+
+
 
 </style>

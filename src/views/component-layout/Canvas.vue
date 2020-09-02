@@ -7,9 +7,11 @@
       @select-component="selectComponent"
       v-model="rules"
     ></render-rule>
+    
     <!-- 弹出层 编辑 -->
     <cl-layout ref="cl_layout" @close="focusMain"></cl-layout>
     <cl-tree v-model="rules" ref="cl_tree" @close="focusMain"></cl-tree>
+
   </div>
 </template>
 
@@ -17,6 +19,7 @@
 import RenderRule from "./rule/Render";
 import Layout from "./components/manage/layout/Layout.vue";
 import Tree from "./components/manage/tree/Tree.vue";
+
 export default {
   name: "cl-canvas",
   components: {
@@ -82,11 +85,13 @@ export default {
     drop(ev) {
       ev.preventDefault();
       var data = JSON.parse(ev.dataTransfer.getData("text/plain"));
-      let { row } = data;
+      let { 
+        componentType
+       } = data;
 
       //组件加入到容器
       this.rules.push({
-        ...row
+        type:componentType
       });
       
       //刷新

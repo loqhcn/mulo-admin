@@ -6,7 +6,7 @@ import { compile, compileToFunctions, ssrCompileToFunctions } from 'vue-template
 /**
  * 应用端服务
  * 
- * @logic 提供组件转义 ,服务创建, 
+ * @logic 提供组件转义 ,服务创建 
  * 
  */
 class App {

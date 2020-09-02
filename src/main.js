@@ -64,6 +64,7 @@ Vue.prototype.$socket = socket;
 //自动加载组件包
 import clPkg from './ClPkg.js'
 Vue.use(clPkg);
+Vue.prototype.$clPackages = clPkg.packages;
 
 window.vm = new Vue({
   store,

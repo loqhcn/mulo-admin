@@ -91,7 +91,6 @@ export default class RuleParse {
         return $rulesCode;
     }
 
-
     /**
      * 规则中的容器类处理
      * 

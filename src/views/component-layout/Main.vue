@@ -18,21 +18,26 @@
       </div>
 
       <div class="main flex space-between">
-        
+        <!-- 选择组件 -->
         <div class="left flex column center-line">
           <div class="components-select">
             <!-- 组件分类 -->
-            <div class="cate" v-for="(li,index) in components" :key="index">
-              <div class="title">{{li.title}}</div>
+            <div class="cate" v-for="(row,pkgName) in components" :key="pkgName">
+              <div class="title">{{row.config.title || pkgName}}</div>
+
+              <!-- 组件栏目 -->
               <div class="conponents">
-                <div class="item" v-for="(row,index2) in li.children" :key="index2">
-                  <!-- 组件栏目 -->
+                <div
+                  class="item"
+                  v-for="(component,componentType) in row.components"
+                  :key="componentType"
+                >
                   <div
                     class="row"
                     draggable="true"
-                    @drag="drag(row,$event)"
-                    @dragstart="dragStart(row,$event)"
-                  >{{row.title}}</div>
+                    @drag="drag(componentType,component,$event)"
+                    @dragstart="dragStart(componentType,component,$event)"
+                  >{{ component.title || componentType }}</div>
                 </div>
               </div>
             </div>
@@ -111,7 +116,6 @@
 import Canvas from "./Canvas";
 import Preview from "./preview/Preview";
 import DefaultUi from "./ui/default";
-
 import buildTemplate from "./compile/buildTemplate";
 
 export default {
@@ -123,7 +127,8 @@ export default {
     return {
       previewVisible: false,
 
-      components: DefaultUi,
+      // components: DefaultUi,
+      components: this.$clPackages,
 
       /**
        * 属性编辑数据渲染
@@ -169,18 +174,21 @@ export default {
       document.querySelector(".edit-body").focus();
     },
     // 开始拖动
-    dragStart(row, e) {
+    dragStart(componentType, component, e) {
       e.dataTransfer.setData(
         "text/plain",
         JSON.stringify({
-          row: row,
+          // row: row,
+          componentType: componentType,
         })
       );
 
-      console.log(row, e);
+      console.log(component, e);
     },
     // 拖动中
-    drag(row, e) {},
+    drag(componentType, component, e) {
+      console.log("落下");
+    },
     clear() {
       if (!confirm("确定?")) {
         return;

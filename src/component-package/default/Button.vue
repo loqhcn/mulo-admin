@@ -1,5 +1,5 @@
 <template>
-  <div>按钮</div>
+  <el-button>{{text}}</el-button>
 </template>
 
 <script>
@@ -8,12 +8,11 @@ export default {
   children: ["按钮"],
   data() {
     return {
-      text: "按钮设置",
+      text: "按钮",
     };
   },
 };
 </script>
 
 <style lang="scss" scoped>
-
 </style>

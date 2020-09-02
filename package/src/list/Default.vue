@@ -159,6 +159,7 @@ export default {
         //列表数据
         let list = res.data.list;
         //处理
+        
         list = this.renderList(list);
         //渲染
         this.list = list;

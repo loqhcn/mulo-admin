@@ -3,7 +3,7 @@ import VueJsonRender from './../../../../package/src/form-create/core/VueJsonRen
 import { isType } from './../../../../package/utils/util'
 import RuleParse from './Parse'
 import ComponentContainer from './../components/ComponentContainer'
-
+import Vue from 'vue'
 let ruleParse = false;
 
 
@@ -25,10 +25,10 @@ export default {
 
     },
     created() {
-        
+
         this.$control.render = this;
         ruleParse = new RuleParse(this);
-        
+
     },
     data() {
         return {
@@ -50,7 +50,9 @@ export default {
         //通过变量刷新组件
         _refresh(rules) {
             this.$forceUpdate();
-            this.$emit('input', rules);
+            if (rules !== undefined) {
+                this.$emit('input', rules);
+            }
         },
         /**
          * 选中组件
@@ -58,18 +60,48 @@ export default {
          * @todo 显示属性设置面板,创建边框标记
          * 
          * @param id rules里的每个组件分配的唯一id
+         * @param Rule 列表规则实体
          */
-        selectComponent() {
+        selectComponent(componentInstance, $element) {
 
+            //规则复制体
             let componentRule = ruleParse.componentsList[this.activityRule.id];
 
+            //规则本体
+            console.log($element, componentInstance)
+
+
+
+            // console.log();
+
             //右侧属性规则
-            this.$parent.$parent.attributeRules = componentRule.renderAttributeEdit ?
-                componentRule.renderAttributeEdit(this.activityRule)
-                : [];
+            // this.$parent.$parent.attributeRules = componentRule.renderAttributeEdit ?
+            //     componentRule.renderAttributeEdit(this.activityRule)
+            //     : [];
+
+            //构建属性编辑组件
+            let editor = vm.$clPackages[$element.pkgName].editor[$element.type]
+            vm.$control.main.$refs.editor.innerHTML = "";
+            //读取editor
+            if (!editor) {
+                return;
+            }
+
+            let componentInfo = Vue.extend(editor);
+            let instance = new componentInfo({
+                data: {
+                    $element: $element,
+                    componentInstance: componentInstance,
+                }
+            });
+            instance.$mount();
+            //加入(防止层级超过提示组件)
+            // document.body.appendChild(instance.$el);
+
+            vm.$control.main.$refs.editor.appendChild(instance.$el);
+
         },
         parse() {
-
             return ruleParse.parse(this.value);
         }
     },

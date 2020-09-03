@@ -13,6 +13,15 @@ export default function buildTemplate(rules) {
     return el
 }
 
+function toLowerLine(str) {
+    var temp = str.replace(/[A-Z]/g, function (match) {
+        return "-" + match.toLowerCase();
+    });
+    if (temp.slice(0, 1) === '-') { //如果首字母是大写，执行replace时会多一个_，这里需要去掉
+        temp = temp.slice(1);
+    }
+    return temp;
+}
 
 /**
  * vuejson 生成 vuetemplate
@@ -28,10 +37,11 @@ function render(vnode) {
     // Strings just convert to #text Nodes:
     if (vnode.split) return document.createTextNode(vnode);
     // create a DOM element with the nodeName of our VDOM element:
-    let n = document.createElement(vnode.type);
-    
+    console.log('createElement', vnode.type);
+    let n = document.createElement(toLowerLine(vnode.type));
+
     //渲染属性
-    
+
     n.className = vnode.attrs && vnode.attrs.class ? vnode.attrs.class : '';
 
     // copy attributes onto the new node:

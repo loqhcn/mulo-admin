@@ -7,11 +7,10 @@
       @select-component="selectComponent"
       v-model="rules"
     ></render-rule>
-    
+
     <!-- 弹出层 编辑 -->
     <cl-layout ref="cl_layout" @close="focusMain"></cl-layout>
     <cl-tree v-model="rules" ref="cl_tree" @close="focusMain"></cl-tree>
-
   </div>
 </template>
 
@@ -26,7 +25,7 @@ export default {
     [RenderRule.name]: RenderRule,
     //操控弹出层
     [Layout.name]: Layout,
-    [Tree.name]: Tree
+    [Tree.name]: Tree,
   },
   data() {
     return {
@@ -34,7 +33,7 @@ export default {
       //可视化id
       viewId: 1,
       //刷新标记
-      flushTag: 0
+      flushTag: 0,
     };
   },
   watch: {
@@ -42,8 +41,8 @@ export default {
       handler(newdata, olddata) {
         console.log("canvas watch rules update");
       },
-      deep: true
-    }
+      deep: true,
+    },
   },
   created() {
     this.$control.canvas = this;
@@ -69,9 +68,8 @@ export default {
       //提交到服务器
       this.$socket.emit("view", {
         viewId: this.viewId,
-        data: this.rules
+        data: this.rules,
       });
-      
     },
     /**
      * 当 rules被更新, 规则同步到服务器
@@ -85,15 +83,21 @@ export default {
     drop(ev) {
       ev.preventDefault();
       var data = JSON.parse(ev.dataTransfer.getData("text/plain"));
-      let { 
-        componentType
-       } = data;
+      let {
+        componentType,
+        pkgName,
+        //覆盖进入实例的data中
+      } = data;
 
       //组件加入到容器
       this.rules.push({
-        type:componentType
+        type: componentType,
+        pkgName: pkgName,
+        data: {
+          title: "标题",
+        },
       });
-      
+
       //刷新
       this.viewToServer();
 
@@ -105,8 +109,8 @@ export default {
     allowDrop(ev) {
       //   console.log(ev);
       ev.preventDefault();
-    }
-  }
+    },
+  },
 };
 </script>
 

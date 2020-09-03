@@ -1,15 +1,14 @@
 <template>
-  <div>弹出层</div>
+  <div>
+    <input v-model="title" type="text" />
+  </div>
 </template>
 
 <script>
 export default {
-  title: "Dialog",
-  naem: "Dialog",
-  type: "dialog",
   data() {
     return {
-      key: "dialog",
+      title: "标题",
     };
   },
 };

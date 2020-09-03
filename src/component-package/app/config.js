@@ -1,6 +1,6 @@
 
 export default {
-    title: '应用组件'
+    title: '应用组件',
 }
 
 

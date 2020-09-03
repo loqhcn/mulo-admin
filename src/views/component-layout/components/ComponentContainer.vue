@@ -20,25 +20,27 @@ export default {
   props: {
     active: {
       type: Boolean,
-      default: false
+      default: false,
     },
+    //rule的本体对象
     $element: {
-      default: false
+      default: false,
     },
+    //Render.js vm实例
     vm: {
-      default: false
+      default: false,
     },
 
     id: {
-      type: Number
+      type: Number,
     },
 
     //拖动组件的规则
     componentRule: {
       default: () => {
         return {};
-      }
-    }
+      },
+    },
   },
   data() {
     return {};
@@ -46,15 +48,16 @@ export default {
   methods: {
     //标记选中的组件
     onClick() {
+      //触发 active 在parse.js中监听进行改变选中的人
       this.$emit("active");
-      this.vm.selectComponent();
-
-    }
-  }
+      let componentInstance = this.$children[0];
+      this.vm.selectComponent(componentInstance,this.$element);
+    },
+  },
 };
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 .mulo-cl-container {
   line-height: 1;
   &.active {

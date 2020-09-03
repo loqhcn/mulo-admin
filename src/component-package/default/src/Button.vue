@@ -4,11 +4,18 @@
 
 <script>
 export default {
+  sort: 1,
   title: "按钮",
   children: ["按钮"],
+  props: {
+    text: {
+      type: String,
+      default: "按钮"
+    },
+  },
   data() {
     return {
-      text: "按钮",
+
     };
   },
 };

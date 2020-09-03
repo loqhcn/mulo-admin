@@ -35,8 +35,8 @@
                   <div
                     class="row"
                     draggable="true"
-                    @drag="drag(componentType,component,$event)"
-                    @dragstart="dragStart(componentType,component,$event)"
+                    @drag="drag(componentType,component,pkgName,$event)"
+                    @dragstart="dragStart(componentType,component,pkgName,$event)"
                   >{{ component.title || componentType }}</div>
                 </div>
               </div>
@@ -62,18 +62,12 @@
           </div>
           <div class="panel-body">
             <!-- 组件属性 -->
-            <div v-if="tabRightActive==0" class="item" style="padding:5px;">
-              <form-create
-                v-model="attributeData"
-                :rules="attributeRules"
-                :footer-setting="{
-                  visible:false,
-                }"
-              ></form-create>
+            <div v-show="tabRightActive==0" class="item" ref="editor" style="padding:5px;">
+              
             </div>
 
             <!-- 设置 -->
-            <div v-if="tabRightActive==1" class="item">
+            <div v-show="tabRightActive==1" class="item">
               <div class="row">
                 <label class="title">容器边框</label>
                 <input type="checkbox" v-model="setting.containerBorder" />
@@ -91,9 +85,8 @@
                 </select>
               </div>
             </div>
-
             <!-- 结构 -->
-            <div v-if="tabRightActive==2" class="item"></div>
+            <div v-show="tabRightActive==2" class="item"></div>
           </div>
         </div>
       </div>
@@ -174,19 +167,20 @@ export default {
       document.querySelector(".edit-body").focus();
     },
     // 开始拖动
-    dragStart(componentType, component, e) {
+    dragStart(componentType, component,pkgName, e) {
       e.dataTransfer.setData(
         "text/plain",
         JSON.stringify({
           // row: row,
           componentType: componentType,
+          pkgName:pkgName,
         })
       );
 
       console.log(component, e);
     },
     // 拖动中
-    drag(componentType, component, e) {
+    drag(componentType, component,pkgName, e) {
       console.log("落下");
     },
     clear() {

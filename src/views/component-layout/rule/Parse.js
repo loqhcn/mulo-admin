@@ -133,25 +133,27 @@ export default class RuleParse {
                     attrsClassList[li] = true;
                 }
             })
-            
 
             //dom渲染
             element = Object.assign(element, {
-                class: _.assign((element.class || {}), classList, attrsClassList),
-                on: {
-
+                class: _.assign((element.class || {}), classList,),
+                nativeOn: {
+                    click(e) {
+                        console.log('nativeOn click')
+                    },
                     //拖动组件落下
                     drop: (e) => {
-
+                        console.log('落下')
                         var data = JSON.parse(e.dataTransfer.getData("text/plain"));
-                        let { row } = data;
+                        let { componentType, pkgName } = data;
 
-                        console.log('container', level, row);
+                        console.log('container', level, componentType);
 
                         //加入子元素
                         $rules[x].children = $rules[x].children || [];
                         $rules[x].children.push({
-                            ...row
+                            type: componentType,
+                            pkgName: pkgName,
                         })
 
                         e.preventDefault();
@@ -164,11 +166,7 @@ export default class RuleParse {
                     keyup: (e) => {
                         console.log(e.keyCode)
                     }
-
-
-                }
-
-
+                },
             })
 
 
@@ -195,15 +193,17 @@ export default class RuleParse {
                 on: {
                     // ## 点击选中某个组件
                     active: () => {
+                        //选中的规则
                         this.vm.activityRule = $rules[x]
+
                         // //
                         // $rules[x].operation = Object.assign($rules[x].operation || {}, {
                         //     active: true
                         // })
-
                     }
                 }
             }
+
 
         }
         return rules;

@@ -49,7 +49,6 @@ export default class RuleParse {
                 })
             })
         })
-
     }
 
     /**
@@ -103,6 +102,7 @@ export default class RuleParse {
      * @return vuejson
      */
     parseContainer(rules, $rules, level) {
+        console.log( 'parseContainer' );
         level = level || 0
         let _this = this;
 
@@ -114,43 +114,51 @@ export default class RuleParse {
             if (typeof element == 'string') {
                 continue;
             }
-            
             let $element = $rules[x];
 
             //dom渲染
+            console.log('render element assign', element)
             element = Object.assign(element, {
 
                 on: {
-
+                    click: (e) => {
+                        console.log('click');
+                    },
                     //拖动组件落下
                     drop: (e) => {
 
                         var data = JSON.parse(e.dataTransfer.getData("text/plain"));
-                        let { row } = data;
+                        let {
+                            componentType
+                        } = data;
 
-                        console.log('container', level, row);
+                        console.log('拖动落下 container', level, componentType);
 
                         //加入子元素
                         $rules[x].children = $rules[x].children || [];
                         $rules[x].children.push({
-                            ...row
+                            type: componentType
                         })
 
+                        //组件冒泡
                         e.preventDefault();
                         e.stopPropagation()
 
                         //刷新 dom 
                         this.vm._refresh.call(this.vm, this.rules)
 
+
                     },
                     keyup: (e) => {
                         console.log(e.keyCode)
                     }
 
-
+                },
+                nativeOn: {
+                    click: (e) => {
+                        console.log('click');
+                    },
                 }
-
-
             })
 
 
@@ -183,7 +191,6 @@ export default class RuleParse {
                         // $rules[x].operation = Object.assign($rules[x].operation || {}, {
                         //     active: true
                         // })
-
                     }
                 }
             }

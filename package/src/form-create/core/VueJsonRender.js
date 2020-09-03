@@ -14,7 +14,7 @@ export default class FormCreateRender {
     constructor(vm) {
         this.vm = vm
     }
-
+    
     /**
      * @logic 读取jsonvue数据, 生成vnode
      * 
@@ -31,7 +31,7 @@ export default class FormCreateRender {
         if(!rule){
             rule = []
         }
-        // console.log('渲染规则',rule)
+        console.log('渲染规则',rule)
 
 
         let data = Array.isArray(rule) ? this.vm.$createElement('div', {}, rule.map(rule => {
@@ -103,7 +103,6 @@ function getProps(rule) {
  */
 function setTemplateProps(rule) {
     if (!rule.vm.$props || !rule.props) return;
-
     const keys = Object.keys(rule.vm.$props);
     keys.forEach(key => {
         if (rule.props[key] !== undefined) rule.vm.$props[key] = rule.props[key];

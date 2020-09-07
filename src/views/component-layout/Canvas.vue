@@ -93,9 +93,6 @@ export default {
       this.rules.push({
         type: componentType,
         pkgName: pkgName,
-        data: {
-          title: "标题",
-        },
       });
 
       //刷新

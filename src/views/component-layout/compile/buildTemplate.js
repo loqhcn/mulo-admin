@@ -13,6 +13,12 @@ export default function buildTemplate(rules) {
     return el
 }
 
+/**
+ * 大驼峰名称转中线名称
+ * @param {String} str 名称
+ * 
+ * @return 中线名称 
+ */
 function toLowerLine(str) {
     var temp = str.replace(/[A-Z]/g, function (match) {
         return "-" + match.toLowerCase();
@@ -41,8 +47,14 @@ function render(vnode) {
     let n = document.createElement(toLowerLine(vnode.type));
 
     //渲染属性
-
     n.className = vnode.attrs && vnode.attrs.class ? vnode.attrs.class : '';
+
+    //默认props渲染
+    if (vnode.props) {
+        for (let propName in vnode.props) {
+            n.setAttribute(`:${propName}`, JSON.stringify(vnode.props[propName]))
+        }
+    }
 
     // copy attributes onto the new node:
     let a = vnode.attributes || {};

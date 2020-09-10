@@ -1,51 +1,62 @@
+/* eslint-disable */
 import axios from 'axios'
-import appConfig from '../config/app';
+import router from './../router'
 
-
-import router from '../router.js'
+import apiConfig from './../config/api'
 
 const instance = axios.create({
-  baseURL: appConfig.baseURL,
-  timeout: 10000,
-  headers: {},
+    baseURL: apiConfig.baseUrl,
+    timeout: 10000,
+    headers: {},
 });
-
 
 
 //访问拦截器  添加用户认证领令牌
 instance.interceptors.request.use(function (config) {
 
-  //数据修改为fromdata模式提交
+    if (!config.params)
+        config.params = {};
+    var token = localStorage.getItem(apiConfig.authTokenLocalName);
+    if (token) {
+        config.headers[apiConfig.authTokenName] = `${token || ''}`;
+    } else {
+        console.log('无token');
+    }
 
- 
+    //请求附带用户认证令牌
+    // var TOKEN = localStorage.getItem(apiConfig.authTokenLocalName);
+    // if (TOKEN) {
+    //   config.headers[apiConfig.authTokenName] = `${TOKEN}`;
+    // }
 
-  //请求附带用户认证令牌
-  var TOKEN = localStorage.getItem('admin_auth_token');
-  if (TOKEN) {
-    config.headers['x-auth-token'] = `${TOKEN}`;
-  }
-  console.log(config);
-  return config;
+    return config;
 }, function (error) {
-  // Do something with request error
-  return Promise.reject(error);
-});
+    // Do something with request error
+    console.log({ err: error })
 
+});
 
 // Add a response interceptor
 instance.interceptors.response.use(function (response) {
-  // Do something with response data
-  console.log(response.data);
-  //TODO 判断登录状态
-  if (response.data && response.data.code) {
+    //TODO 判断登录状态
+    if (response.data && response.data.code != 200) {
+        if (response.data.code == 777 || response.data.code == 778) {
+            console.log('未登录')
+            router.push({
+                path: '/login'
+            })
+        }
+    }
+    return response.data;
 
-  }
-
-  return response.data;
-  
 }, function (error) {
-  // Do something with response error
-  return Promise.reject(error);
+    // console.log({ err: error })
+    if (error.code == 'ECONNABORTED') {
+        router.app.$toast("网络请求超时")
+    } else if (error.message == 'Network Error') {
+        router.app.$toast("网络错误~ 请检查网络环境~")
+    }
+    return Promise.reject(error);
 });
 
 export default instance;

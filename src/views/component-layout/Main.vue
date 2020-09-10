@@ -6,9 +6,8 @@
     >
       <div class="header flex space-between">
         <div class="left">
-          <h3>设计器</h3>
+          <h3 @click="appRoute.go('/component-layout/index')">Component Layout</h3>
         </div>
-
         <div class="right">
           <el-button @click="buildTemplate">生成template</el-button>
           <el-button @click="showJson">打印JSON规则</el-button>
@@ -20,33 +19,45 @@
       <div class="main flex space-between">
         <!-- 选择组件 -->
         <div class="left flex column center-line">
-          <div class="components-select">
-            <!-- 组件分类 -->
-            <div class="cate" v-for="(row,pkgName) in components" :key="pkgName">
-              <div class="title">{{row.config.title || pkgName}}</div>
+          <el-tabs v-model="leftTab">
+            <el-tab-pane label="页面" name="pages">
+              <el-tree :data="pagesData" :props="pagesTreeDefaultProps"></el-tree>
+            </el-tab-pane>
+            <el-tab-pane label="组件" name="components">
+              <div class="components-select">
+                <!-- 组件分类 -->
+                <div class="cate" v-for="(row,pkgName) in components" :key="pkgName">
+                  <div class="title">{{row.config.title || pkgName}}</div>
 
-              <!-- 组件栏目 -->
-              <div class="conponents">
-                <div
-                  class="item"
-                  v-for="(component,componentType) in row.components"
-                  :key="componentType"
-                >
-                  <div
-                    class="row"
-                    draggable="true"
-                    @drag="drag(componentType,component,pkgName,$event)"
-                    @dragstart="dragStart(componentType,component,pkgName,$event)"
-                  >{{ component.title || componentType }}</div>
+                  <!-- 组件栏目 -->
+                  <div class="conponents">
+                    <div
+                      class="item"
+                      v-for="(component,componentType) in row.components"
+                      :key="componentType"
+                    >
+                      <div
+                        class="row"
+                        draggable="true"
+                        @drag="drag(componentType,component,pkgName,$event)"
+                        @dragstart="dragStart(componentType,component,pkgName,$event)"
+                      >{{ component.title || componentType }}</div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </el-tab-pane>
+          </el-tabs>
         </div>
 
         <!-- 编辑区 -->
         <div class="body edit-body" tabindex="1" @keydown.exact="keydown" @click="focusMain">
-          <cl-canvas @focus-main="focusMain" ref="cl_canvas"></cl-canvas>
+          <cl-canvas
+            @focus-main="focusMain"
+            ref="cl_canvas"
+            :width="screenTypes[screenTypeActive].width"
+            :height="screenTypes[screenTypeActive].height"
+          ></cl-canvas>
         </div>
 
         <div class="right">
@@ -62,28 +73,29 @@
           </div>
           <div class="panel-body">
             <!-- 组件属性 -->
-            <div v-show="tabRightActive==0" class="item" ref="editor" style="padding:5px;">
-              
-            </div>
+            <div v-show="tabRightActive==0" class="item" ref="editor" style="padding:5px;"></div>
 
             <!-- 设置 -->
             <div v-show="tabRightActive==1" class="item">
-              <div class="row">
-                <label class="title">容器边框</label>
-                <input type="checkbox" v-model="setting.containerBorder" />
-              </div>
+              <el-form ref="setting" label-width="80px">
+                <el-form-item label="容器边框">
+                  <el-checkbox v-model="setting.containerBorder" />
+                </el-form-item>
+                <el-form-item label="容器边距">
+                  <el-input style="width:100px" type="number" v-model="setting.containerPadding" />px
+                </el-form-item>
 
-              <div class="row">
-                <label class="title">容器padding</label>
-                <input type="number" v-model="setting.containerPadding" />px
-              </div>
-
-              <div class="row">
-                <label class="title">屏幕类型</label>
-                <select v-model="screenTypeActive">
-                  <option v-for="(li,index) in screenTypes" :key="index" :value="index">{{li.type}}</option>
-                </select>
-              </div>
+                <el-form-item label="屏幕类型">
+                  <el-select v-model="screenTypeActive" placeholder>
+                    <el-option
+                      v-for="(item,index) in screenTypes"
+                      :key="index"
+                      :label="item.type"
+                      :value="index"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-form>
             </div>
             <!-- 结构 -->
             <div v-show="tabRightActive==2" class="item"></div>
@@ -140,16 +152,85 @@ export default {
         //容器内边距
         containerPadding: 0,
       },
+      //内置屏幕类型
       screenTypes: [
-        { type: "auto" },
-        { type: "iphone6", width: 375, height: 667 },
+        // 充满
+        { type: "auto", width: "100%", height: "100%" },
+        // 苹果6
+        { type: "iphone6", width: "375px", height: "667px" },
       ],
-      screenTypeActive: 0,
+      screenTypeActive: 1,
       //vuejson 整个编辑规则
       rules: [],
 
       tabRight: ["属性", "设置", "结构", "样式"],
       tabRightActive: 0,
+
+      // 左侧栏目
+      leftTab: "pages",
+      //所属应用
+      appId: 1,
+      pagesData: [
+        {
+          label: "一级 1",
+          children: [
+            {
+              label: "二级 1-1",
+              children: [
+                {
+                  label: "三级 1-1-1",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          label: "一级 2",
+          children: [
+            {
+              label: "二级 2-1",
+              children: [
+                {
+                  label: "三级 2-1-1",
+                },
+              ],
+            },
+            {
+              label: "二级 2-2",
+              children: [
+                {
+                  label: "三级 2-2-1",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          label: "一级 3",
+          children: [
+            {
+              label: "二级 3-1",
+              children: [
+                {
+                  label: "三级 3-1-1",
+                },
+              ],
+            },
+            {
+              label: "二级 3-2",
+              children: [
+                {
+                  label: "三级 3-2-1",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      pagesTreeDefaultProps: {
+        children: "children",
+        label: "label",
+      },
     };
   },
   created() {
@@ -167,20 +248,20 @@ export default {
       document.querySelector(".edit-body").focus();
     },
     // 开始拖动
-    dragStart(componentType, component,pkgName, e) {
+    dragStart(componentType, component, pkgName, e) {
       e.dataTransfer.setData(
         "text/plain",
         JSON.stringify({
           // row: row,
           componentType: componentType,
-          pkgName:pkgName,
+          pkgName: pkgName,
         })
       );
 
       console.log(component, e);
     },
     // 拖动中
-    drag(componentType, component,pkgName, e) {
+    drag(componentType, component, pkgName, e) {
       console.log("落下");
     },
     clear() {
@@ -321,14 +402,11 @@ export default {
 
     .canvas {
       background-color: white;
-
-      min-width: 100px;
-      min-height: 100px;
     }
   }
 
   .right {
-    width: 200px;
+    min-width: 200px;
     overflow-x: hidden;
     border-left: 1px solid #000;
     // 菜单
@@ -342,6 +420,9 @@ export default {
       .item.active {
         color: red;
       }
+    }
+    .panel-body {
+      padding: 0 5px;
     }
   }
 }

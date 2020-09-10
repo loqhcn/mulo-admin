@@ -1,13 +1,19 @@
 
 <template>
-  <div class="canvas" draggable="false" @drop="drop" @dragover="allowDrop">
+  <div
+    class="canvas"
+    :style="{width:width,height:height}"
+    
+    draggable="false"
+    @drop="drop"
+    @dragover="allowDrop"
+  >
     <render-rule
       @change="change"
       @input="input"
       @select-component="selectComponent"
       v-model="rules"
     ></render-rule>
-
     <!-- 弹出层 编辑 -->
     <cl-layout ref="cl_layout" @close="focusMain"></cl-layout>
     <cl-tree v-model="rules" ref="cl_tree" @close="focusMain"></cl-tree>
@@ -26,6 +32,17 @@ export default {
     //操控弹出层
     [Layout.name]: Layout,
     [Tree.name]: Tree,
+  },
+  computed: {
+    
+  },
+  props: {
+    width: {
+      default: "100%",
+    },
+    height: {
+      default: "100%",
+    },
   },
   data() {
     return {

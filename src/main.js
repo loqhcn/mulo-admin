@@ -37,9 +37,36 @@ import eleme from 'element-ui'
 Vue.use(eleme)
 
 //网络
-// import http from './core/http'
-// Vue.prototype.$http = http;
-// window.$http = http;
+import http from './core/http'
+Vue.prototype.$http = http;
+window.$http = http;
+
+// # 路由封装函数
+class AppRoute {
+  go(path, params) {
+    params = params || {};
+    router.push({ path: path, query: params }).catch(e => {
+      console.log(e.message)
+    })
+  }
+
+  replace(path, params) {
+    params = params || {};
+    router.replace({ path: path, query: params });
+  }
+
+  back() {
+    if (window.history.length <= 1) {
+      router.push({ path: '/member' })
+      return false
+    } else {
+      router.back()
+    }
+  }
+}
+window.appRoute = Vue.prototype.appRoute = new AppRoute();
+
+
 
 
 // # 可视化编辑页面

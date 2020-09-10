@@ -16,6 +16,7 @@
     <router-link to="/test-form-1">表单页测试 mulo-form-default</router-link>
     
     <h1>可视化后台 (component-layout)</h1>
+     <router-link to="/component-layout/index">Component Layout</router-link>
     <router-link to="/component-layout/main">组件拖动布局</router-link>
     <router-link to="/component-layout/test/compile">模板编译测试</router-link>
     <router-link to="/component-layout/dev/index">页面开发</router-link>

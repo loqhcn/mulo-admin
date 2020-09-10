@@ -24,10 +24,8 @@ let clComponents = {
 //处理组件
 let components = clApp.parseComponent(clComponents);
 
-
-
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   routes: [
     {
       path: '/',
@@ -49,6 +47,7 @@ const router = new VueRouter({
 
     // 组件布局
     { path: '/component-layout/index', component: () => import('./views/component-layout/Index.vue') },
+    { path: '/component-layout/project/detail', component: () => import('./views/component-layout/views/project/Detail.vue') },
     { path: '/component-layout/main', component: () => import('./views/component-layout/Main.vue') },
     { path: '/component-layout/test/compile', component: () => import('./views/component-layout/test/Compile.js') },
     { path: '/component-layout/dev/index', component: components.index },

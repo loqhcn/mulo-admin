@@ -51,6 +51,8 @@ export default {
       viewId: 1,
       //刷新标记
       flushTag: 0,
+      //选中页面
+      selectView:null,
     };
   },
   watch: {

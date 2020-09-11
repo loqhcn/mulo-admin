@@ -21,7 +21,11 @@
         <div class="left flex column center-line">
           <el-tabs v-model="leftTab">
             <el-tab-pane label="页面" name="pages">
-              <el-tree :data="pagesData" :props="pagesTreeDefaultProps"></el-tree>
+              <el-tree
+                :data="pagesData"
+                :props="pagesTreeDefaultProps"
+                @node-click="handleNodeClick"
+              ></el-tree>
             </el-tab-pane>
             <el-tab-pane label="组件" name="components">
               <div class="components-select">
@@ -84,7 +88,6 @@
                 <el-form-item label="容器边距">
                   <el-input style="width:100px" type="number" v-model="setting.containerPadding" />px
                 </el-form-item>
-
                 <el-form-item label="屏幕类型">
                   <el-select v-model="screenTypeActive" placeholder>
                     <el-option
@@ -169,7 +172,7 @@ export default {
       // 左侧栏目
       leftTab: "pages",
       //所属应用
-      appId: 1,
+      appId: this.$route.query.id || 1,
       pagesData: [
         {
           label: "一级 1",
@@ -228,18 +231,47 @@ export default {
         },
       ],
       pagesTreeDefaultProps: {
-        children: "children",
-        label: "label",
+        children: "pages",
+        label: "title",
       },
+      //选中一个页面
+      currentPage: null,
     };
   },
   created() {
     this.$control.main = this;
+    //读取页面
+    this.$http.post("cl/page/cates", { appId: this.appId }).then((res) => {
+      if (res.code != 200) {
+        this.$toast(res.msg);
+        return;
+      }
+      this.pagesData = res.data.cates;
+    });
   },
   mounted() {
     this.focusMain();
   },
   methods: {
+    handleNodeClick(data) {
+      //点击view
+      if (data.view !== undefined) {
+        //缓存页面
+        if (this.currentPage) {
+          this.currentPage.view = this.$control.canvas.rules;
+        }
+        //加载页面
+        let view = data.view || [];
+        this.currentPage = data;
+        this.loadView(view);
+      }
+    },
+    loadView(view) {
+      //保存当前的view
+
+      console.log("loadView", view);
+      this.$control.canvas.rules = view;
+    },
     /**
      * 聚焦div的事件
      *

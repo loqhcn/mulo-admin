@@ -7,7 +7,7 @@
           <template v-slot:table="{vmdata}">
             <el-table class="zoo-table" :data="vmdata.list" style="width: 100%">
               <el-table-column fixed prop="id" label="ID" width="60"></el-table-column>
-              <el-table-column prop="title" label="应用名" width="60"></el-table-column>
+              <el-table-column prop="title" label="应用名" ></el-table-column>
               <el-table-column fixed="right" label="操作" width="100">
                 <template v-slot:default=" { row }">
                   <div class="operations">

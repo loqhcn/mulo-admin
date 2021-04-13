@@ -22,6 +22,7 @@ function regComponent(Vue, component) {
     console.log('mulo-' + component.name);
     Vue.component('mulo-' + component.name, component)
 }
+
 //安装方法
 const install = function (Vue) {
     //内部组件http
@@ -32,14 +33,15 @@ const install = function (Vue) {
     regComponent(Vue, FormRow);
     regComponent(Vue, SelectRows);
     regComponent(Vue, ListSort);
-    // 2021年4月10日18:23:02 取消集成这个组件 会导致出现弹出层层级问题
-    // Vue.prototype.$loading = Loading.service;
-    // Vue.prototype.$msgbox = MessageBox;
-    // Vue.prototype.$alert = MessageBox.alert;
-    // Vue.prototype.$confirm = MessageBox.confirm;
-    // Vue.prototype.$prompt = MessageBox.prompt;
-    // Vue.prototype.$notify = Notification;
-    // Vue.prototype.$message = Message;
+
+    Vue.prototype.$loading = Loading.service;
+    Vue.prototype.$msgbox = MessageBox;
+    Vue.prototype.$alert = MessageBox.alert;
+    Vue.prototype.$confirm = MessageBox.confirm;
+    Vue.prototype.$prompt = MessageBox.prompt;
+    Vue.prototype.$notify = Notification;
+    Vue.prototype.$message = Message;
+
     //基础弹出层
     Vue.prototype.$toast = (msg) => {
         Message(msg);

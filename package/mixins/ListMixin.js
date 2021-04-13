@@ -14,13 +14,11 @@ const ListDefualtMixin = {
                 return {};
             }
         },
-
         // 接口地址
         api: {
             type: String,
             default: ""
         },
-
         // 字段数据
         rows: {
             type: Array,

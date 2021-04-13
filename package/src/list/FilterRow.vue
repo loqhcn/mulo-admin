@@ -118,15 +118,15 @@
 </template>
 
 <script>
-import {
-  Input,
-  Button,
-  Select,
-  Option,
-  DatePicker,
-  TimePicker,
-  Checkbox
-} from "element-ui";
+// import {
+//   Input,
+//   Button,
+//   Select,
+//   Option,
+//   DatePicker,
+//   TimePicker,
+//   Checkbox
+// } from "element-ui";
 import MuloCheckBoxGroup from "./../../components/checkbox-group/CheckBoxGroup.vue";
 import NumberRange from "./filters/NumberRange";
 
@@ -136,15 +136,15 @@ console.log(MuloCheckBoxGroup);
 export default {
   name: "mulo-filter-row",
   components: {
-    [Input.name]: Input,
-    [Button.name]: Button,
-    [Select.name]: Select,
-    [Option.name]: Option,
-    [DatePicker.name]: DatePicker,
-    [TimePicker.name]: TimePicker,
-    [Checkbox.name]: Checkbox,
-    "checkbox-group": MuloCheckBoxGroup,
-    [NumberRange.name]: NumberRange
+    // [Input.name]: Input,
+    // [Button.name]: Button,
+    // [Select.name]: Select,
+    // [Option.name]: Option,
+    // [DatePicker.name]: DatePicker,
+    // [TimePicker.name]: TimePicker,
+    // [Checkbox.name]: Checkbox,
+    // "checkbox-group": MuloCheckBoxGroup,
+    // [NumberRange.name]: NumberRange
   },
   computed: {
     //是否显示搜索按钮

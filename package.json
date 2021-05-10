@@ -21,7 +21,7 @@
     "axios": "^0.19.0",
     "core-js": "^3.3.2",
     "json2vue": "^0.0.3",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "mulo-ui": "^0.1.15",
     "print-js": "^1.0.63",
     "socket.io-client": "^2.3.0",
